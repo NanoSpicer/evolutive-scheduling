@@ -30,21 +30,21 @@ esté disponible en determinadas horas de la semana.
 
 # Soft ruleset
 
-1* Penalizar los horarios de cursos con muchas horas en el mismo día (> 8 horas).
+1. Penalizar los horarios de cursos con muchas horas en el mismo día (> 8 horas).
 
-2* Penalizar los horarios de profesores con muchas horas en el mismo día.
+2. Penalizar los horarios de profesores con muchas horas en el mismo día.
 
-3* Penalizar los horarios de cursos que tengan asignaturas con más de 2 horas de docencia de la misma asignatura por día.
+3. Penalizar los horarios de cursos que tengan asignaturas con más de 2 horas de docencia de la misma asignatura por día.
 
-4* Penalizar los horarios de curso que tengan mas de dos horas la misma asignatura (curso)
+4. Penalizar los horarios de curso que tengan mas de dos horas la misma asignatura (curso)
 
-5* Penalizar los horarios de cursos en los que una misma asignatura se imparte de forma no consecutiva en el mismo día.
+5. Penalizar los horarios de cursos en los que una misma asignatura se imparte de forma no consecutiva en el mismo día.
 
-6* Penalizar los horarios de cursos que tengan huecos. ¡Esta condición está entre hard y soft!.
+6. Penalizar los horarios de cursos que tengan huecos. ¡Esta condición está entre hard y soft!.
 
-7* Penalizar los horarios de profesores que tengan huecos.
+7. Penalizar los horarios de profesores que tengan huecos.
 
-8* Penalizar los horarios de profesores con horas vacías al principio del día. Es decir promover que las horas vacías estén al final del día.
+8. Penalizar los horarios de profesores con horas vacías al principio del día. Es decir promover que las horas vacías estén al final del día.
 
 
 
