@@ -89,6 +89,10 @@ Disponibilidad los Miercoles durante las 10, 11 y las 14 del mediodia
 ```
 
 ### Horario del instituto
+* Lista de horas en las que se va a dar clase.
+* Falta el 11 para simular el patio
+* Falta el 15 para simular hora de la comida
+* El jueves es más _heavy_ para que el viernes sea más _light_
 ```json
 [ 
   [8,9,10,12,13,14,16,17], 
