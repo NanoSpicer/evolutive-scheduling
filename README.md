@@ -93,7 +93,15 @@ Vienen dadas por un grupo de materias y un número total de horas semanales
 ```json
 {
   "idAsignatura": 1,
+  "nombre": "Mates",
   "totalHorasSemanales": 12,
   "profesor": 1
+},
+
+{
+  "idAsignatura": 2,
+  "nombre": "Mates",
+  "totalHorasSemanales": 12,
+  "profesor": 2
 }
 ```
