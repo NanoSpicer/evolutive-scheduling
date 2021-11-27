@@ -112,7 +112,7 @@ Vienen dadas por un grupo de materias y un número total de horas semanales
   "totalHorasSemanales": 12,
 }
 ``` 
-### Asignacion
+### Asignación
 ```json
 {
   "idClase": 1,
