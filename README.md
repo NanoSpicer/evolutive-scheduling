@@ -88,6 +88,17 @@ Disponibilidad los Miercoles durante las 10, 11 y las 14 del mediodia
 }
 ```
 
+### Horario del instituto
+```json
+[ 
+  [8,9,10,12,13,14,16,17], 
+  [8,9,10,12,13,14,16,17], 
+  [8,9,10,12,13,14,16,17], 
+  [8,9,10,12,13,14,16,17,18,19], 
+  [10, 11, 14], 
+  [] ,[] 
+]
+```
 ### Clases
 Vienen dadas por un grupo de materias y un número total de horas semanales
 ```json
