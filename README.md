@@ -1,8 +1,10 @@
 # Evolutive-scheduling
+
 Solving a scheduling problem using evolutive algorithms
 
 El algoritmo tendrá como entrada la siguiente
 información:
+
 * Un número de clases (grupos de alumnos). Ningún alumno está en dos clases.
 
 * Para cada clase, un número total de horas semanales y una lista de asignaturas.
@@ -16,7 +18,6 @@ esté disponible en determinadas horas de la semana.
 * Las franjas horarias semanales disponibles para impartir las clases.
 
 
-
 <img src="class.jpeg">
 
 # Hard ruleset
@@ -25,7 +26,7 @@ esté disponible en determinadas horas de la semana.
 
 2. Un profesor no puede impartir la asignatura, si no está en el centro.
 
-3. Dos asignaturas del mismo curso solapadas (coincidan)
+3. Dos asignaturas del mismo curso no pueden coincidir en el tiempo (solaparse).
 
 
 # Soft ruleset
