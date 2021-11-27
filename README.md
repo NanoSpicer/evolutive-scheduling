@@ -21,11 +21,11 @@ esté disponible en determinadas horas de la semana.
 
 # Hard ruleset
 
-1 Un profesor no puede estar en dos aulas distintas a la vez. Esta es ignorable si en nuestra representación, población, y operador de mutación lo tenemos en cuenta.
+1. Un profesor no puede estar en dos aulas distintas a la vez. Esta es ignorable si en nuestra representación, población, y operador de mutación lo tenemos en cuenta.
 
-2 Un profesor no puede impartir la asignatura, si no está en el centro.
+2. Un profesor no puede impartir la asignatura, si no está en el centro.
 
-3 Dos asignaturas del mismo curso solapadas (coincidan)
+3. Dos asignaturas del mismo curso solapadas (coincidan)
 
 
 # Soft ruleset
