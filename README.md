@@ -80,6 +80,14 @@ Disponibilidad los Miercoles durante las 10, 11 y las 14 del mediodia
 [ [], [], [10, 11, 14], [], [], [] ,[] ]
 ```
 
+
+```json
+{
+  "0": [ [], [], [10, 11, 14], [], [], [] ,[] ],
+  "1": [ [], [], [], [], [10, 11, 14], [] ,[] ]
+}
+```
+
 ### Clases
 Vienen dadas por un grupo de materias y un número total de horas semanales
 ```json
