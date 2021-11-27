@@ -102,13 +102,11 @@ Vienen dadas por un grupo de materias y un número total de horas semanales
 {
   "idAsignatura": 1,
   "nombre": "Mates",
-  "totalHorasSemanales": 12,
-  "profesor": 1
+  "totalHorasSemanales": 12
 },
 {
   "idAsignatura": 2,
   "nombre": "Mates",
-  "totalHorasSemanales": 12,
-  "profesor": 2
+  "totalHorasSemanales": 12
 }
 ```
