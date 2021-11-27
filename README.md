@@ -15,7 +15,7 @@ clases distintas y varias asignaturas a la misma clase.
 * Para cada profesor, se dispondrá de su disponibilidad horaria, puede ser que no
 esté disponible en determinadas horas de la semana.
 
-* Las franjas horarias semanales disponibles para impartir las clases.
+* Las franjas horarias semanales disponibles para impartir las clases. (del centro)
 
 
 <img src="class.jpeg">
@@ -49,3 +49,49 @@ esté disponible en determinadas horas de la semana.
 
 
 
+## Estrcutras de datos
+
+### Profesor
+Número entero
+
+### Clase
+Número entero
+
+### TimeSlot
+Número entero, entre 0 y 23 (representando las horas del dia>)
+
+
+### Número de clases
+Un numero de clases arbitrario (10)
+
+### Materia
+Número entero (23)
+
+### Disponibilidad del profesor
+Array de 7 posiciones donde la posicion 0 representa Lunes y el 6 representa el Domingo
+```json
+// Sin disponibilidad
+[ [], [], [], [], [], [] ,[] ]
+```
+```json
+// Disponibilidad los Miercoles durante las 10, 11 y las 14 del mediodia
+[ [], [], [10, 11, 14], [], [], [] ,[] ]
+```
+
+### Clases
+Vienen dadas por un grupo de materias y un número total de horas semanales
+```json
+{
+  idClase: 1,
+  totalHorasSemanales: 12,
+  listaAsignaturas: [1, 3, 4]
+}
+``` 
+### Asignatura
+```json
+{
+  idAsignatura: 1,
+  totalHorasSemanales: 12,
+  profesor: 1
+}
+```
