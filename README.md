@@ -92,7 +92,7 @@ Vienen dadas por un grupo de materias y un número total de horas semanales
 ```json
 {
   "idClase": 1,
-  "idAsignatura: 3,
+  "idAsignatura": 3,
   "idProfesor": 4
 }
 ``` 
