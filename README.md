@@ -69,12 +69,14 @@ Número entero (23)
 
 ### Disponibilidad del profesor
 Array de 7 posiciones donde la posicion 0 representa Lunes y el 6 representa el Domingo
+
+Sin disponibilidad
 ```json
-// Sin disponibilidad
 [ [], [], [], [], [], [] ,[] ]
 ```
+
+Disponibilidad los Miercoles durante las 10, 11 y las 14 del mediodia
 ```json
-// Disponibilidad los Miercoles durante las 10, 11 y las 14 del mediodia
 [ [], [], [10, 11, 14], [], [], [] ,[] ]
 ```
 
@@ -82,16 +84,16 @@ Array de 7 posiciones donde la posicion 0 representa Lunes y el 6 representa el 
 Vienen dadas por un grupo de materias y un número total de horas semanales
 ```json
 {
-  idClase: 1,
-  totalHorasSemanales: 12,
-  listaAsignaturas: [1, 3, 4]
+  "idClase": 1,
+  "totalHorasSemanales": 12,
+  "listaAsignaturas": [1, 3, 4]
 }
 ``` 
 ### Asignatura
 ```json
 {
-  idAsignatura: 1,
-  totalHorasSemanales: 12,
-  profesor: 1
+  "idAsignatura": 1,
+  "totalHorasSemanales": 12,
+  "profesor": 1
 }
 ```
