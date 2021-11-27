@@ -86,7 +86,14 @@ Vienen dadas por un grupo de materias y un número total de horas semanales
 {
   "idClase": 1,
   "totalHorasSemanales": 12,
-  "listaAsignaturas": [1, 3, 4]
+}
+``` 
+### Asignacion
+```json
+{
+  "idClase": 1,
+  "idAsignatura: 3,
+  "idProfesor": 4
 }
 ``` 
 ### Asignatura
@@ -97,7 +104,6 @@ Vienen dadas por un grupo de materias y un número total de horas semanales
   "totalHorasSemanales": 12,
   "profesor": 1
 },
-
 {
   "idAsignatura": 2,
   "nombre": "Mates",
