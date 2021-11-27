@@ -17,8 +17,10 @@ esté disponible en determinadas horas de la semana.
 
 * Las franjas horarias semanales disponibles para impartir las clases. (del centro)
 
+<div align="center">
+  <img src="class.jpeg" height="480">
+</div>
 
-<img src="class.jpeg">
 
 # Hard ruleset
 
