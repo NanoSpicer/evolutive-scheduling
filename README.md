@@ -110,7 +110,7 @@ Vienen dadas por un grupo de materias y un número total de horas semanales
 ```json
 {
   "idClase": 1,
-  "nombre": "3A",
+  "nombre": "3B",
   "totalHorasSemanales": 12,
 }
 ``` 
