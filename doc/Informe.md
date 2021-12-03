@@ -80,17 +80,18 @@ apartado se presenta el formato
 de las entradas al proceso, 
 el genotipo, la representación interna de ambos, 
 el método de población inicial, 
-la función de fitness, 
+la función de *fitness*, 
 y los diferentes operadores 
 (mutación, recombinación y selección).
-- [Pruebas y análisis](#Pruebasyanálisis): donde 
+- [Pruebas y análisis](#Pruebas-y-análisis): donde 
 se analizan los resultados obtenidos para diferentes 
 ejemplos que se suministran.
-- [Cambios y resultados](#Cambiosyresultados): en 
+- [Cambios y resultados](#Cambios-y-resultados): en 
 este apartado se propone un cambio y se presentan
 las variaciones obtenidas en el desempeño de los ejemplos.
-- [Conslusiones](#Conclusiones): finalmente
+- [Conclusiones](#Conclusiones): finalmente
 un último apartado de conclusiones finaliza este trabajo.
+
 
 ## Restricciones
 
@@ -126,6 +127,7 @@ El conjunto de restricciones débiles es:
 7. Penalizar los horarios de profesores que tengan huecos.
 
 8. Penalizar los horarios de profesores con horas vacías al principio del día. Es decir promover que las horas vacías estén al final del día.
+
 
 ## Implementación
 
@@ -229,14 +231,17 @@ del mismo profesor (i.e. la misma fila).
 
 > Elegir padres, liberar un % de tareas
 
+
 ## Pruebas y análisis
 
 > Qué ejemplos hemos probado (posibles e imposibles de resolver)
 y resultados de convergencia y tiempo.
 
+
 ## Cambios y resultados
 
 > Cambios que hemos implementado y sus resultados.
+
 
 ## Conclusiones
 
