@@ -3,6 +3,7 @@
 ## Identificación
 
 Assignatura: Inteligencia Computacional
+
 Estudios: MUSI - UIB
 
 Profesor: Sebastián Massanet
@@ -14,9 +15,7 @@ Alumnos:
 
 ## Introducción 
 
-> Enunciado resumido
-
-## Implementación
+> Poner enunciado resumido
 
 ### Restricciones
 
@@ -51,47 +50,80 @@ El conjunto de restricciones débiles es:
 
 8. Penalizar los horarios de profesores con horas vacías al principio del día. Es decir promover que las horas vacías estén al final del día.
 
+## Implementación
+
 ### Entrada de datos
 
-Poner estructuras JSON...
+> Poner estructuras JSON que diseñó MA ...
 
 ### Genotipo
 
-Nuestro genotipo es una matriz con la siguiente estructura: 
+Nuestro genotipo será una estructura que puede 
+concebirse como una tabla de dos dimensiones, donde:
 
-- Filas: representan la *lista de tareas* de cada profesor. 
+- Las filas representan la *lista de tareas* de cada profesor. 
 Es decir, existe una fila para cada profesor. 
 
-- Columnas: cada columna representa un *slot* horario. 
-Todas las celdas de la misma columna representan el mismo *slot*. 
+- Las columnas representan cada una un *slot* horario. 
+Todas las celdas de la misma columna representan el mismo *slot* temporal. 
 
-Así nuestro genotipo será un dicconario de listas de enteros 
-con P entradas y valores por lista, 
+La implementación de este genotipo la haremos 
+usando un dicconario de *Python* cuya clave será 
+el identificador del profesor y su contenido
+una lista de enteros. 
+Por tanto el diccionario poseerá P entradas 
+y por tanto P listas, 
+cada una con 168 posiciones (7 x 24), 
 siendo P el cardinal del conjunto de profesores.
+El primer *slot* de la lista se corrsponde 
+con la franja horaria 00:00 a 01:00 del lunes 
+y el último con 
+la franja horaria 23:00 a 24:00 del domingo.
 
 Podemos pensar en esta estructura como una matriz 
 de este estilo:
 
 | Id profesor | 0 | 1 | ... | 8 | 9 | 10 | 11 | ... | 167 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| :---: | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | ND | ND | ... | ND | 2 | 5 | 3 | ... | ND |
 | 2 | ND | ND | ... | ND | 6 | Libre | 4 | ... | ND |
 | ... | ... | ... | ... | ... | ... | ... | ... | ... | ND |
-| 5 | ND | ND | ... | ND | ND | 7 | Libre | --- | ND |
+| 25 | ND | ND | ... | ND | ND | 7 | Libre | --- | ND |
 
 En el ejemplo anterior:
-- el profesor 1 tiene asignada:
+- el profesor con identificador 1 tiene asignada:
     - la tarea 2 el lunes a las 9
     - la tarea 5 el lunes a las 10
     - la tarea 3 el lunes a las 11
-- el profesor 2 tiene asignada: 
+- el profesor con identificador 2 tiene asignada: 
     - la tarea 6 el lunes a las 9
     - un *slot* libre el lunes a las 10
     - la tarea 4 el lunes a la 11
-- el profesor 5 tiene asignada:
+- el profesor con identificador 25 tiene asignada:
     - la tarea 7 el lunes a las 10
     - un *slot* libre el lunes a las 11
 
 Los *slots* en los que el profesor no està disponible, 
 están marcados con un valor especial que llamaremos *ND*.
+Los *slots* en los que el profesor sí está disponible, 
+pero no tienen ninguna tarea, se marcan con otro valor 
+especial al que llamaremos *Libre*.
+
+### Definición de tarea
+
+Cada tarea es un tupla 
+que consta de los siguientes elementos: 
+
+- idTarea: entero que actua de clave única 
+para esta tupla. 
+Este valor se le asigna en el momento de su creación
+en memoria de forma secuencial empezando por 1.
+- idClase: entero que identifica 
+de forma unívoca una clase de todas las definidas.
+- horas: cantidad de *slots*  que esta tarea debe
+de forma obligatoria asignarse.
+- idAsignatura: entero que identifica la asignatura.
+- idProfesor: entero del identificador del profesor.
+- vida: contador del número de asignaciones disponibles.
+Inicialmente tiene el mismo valor que `horas` y sa va decrementado una unidad por asignación. 
 
