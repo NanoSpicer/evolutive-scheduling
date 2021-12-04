@@ -15,10 +15,11 @@ import genotype as gen
 
 class Population:
 
-    def __init__(self, data: object, instances: int) -> object:
+    def __init__(self, inputs: object, n_ins: int, met: object) -> object:
 
-        self.data = data
-        self.instances = instances
+        self.inputs = inputs
+        self.n_ins = n_ins  # how many genotype instances (i.e. cardinality of population)
+        self.method = met
         self.results = None
         self.error = None
 
@@ -38,8 +39,17 @@ class Population:
         """
         Crossover operator: creates a new set of genotype instances
         using the parents information
+
+        :return:
         """
         pass
 
-    def fit(self):
+    def fit(self, iterations: int = 10000):
+        """
+        Start evolutive algorithm until iterations exhaust
+
+        :param iterations: number of iterations to execute
+        :return: nothing
+        """
+
         pass

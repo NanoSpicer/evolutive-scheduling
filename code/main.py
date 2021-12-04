@@ -12,42 +12,48 @@
 
 # Our own classes
 #
-import json
-
 import load_save as ls
 import population as pop
 
 
 # Main program
 #
-def process_data_sets(ds_list: list, instances_list: list):
-    for data_set_files in ds_list:
+def process_data_sets(in_list: list, out_list: list, num_inst_list: list, methods_list: list):
+    for in_dir, out_dir in zip(in_list, out_list):
 
-        ## Load data from JSON set
+        # Load data from JSON set
         loader = ls.Loader()
-        loader.load(data_set_files)
+        loader.load(in_dir)
 
-        if loader.error == None:
+        if loader.error is None:
 
-            for ins in instances_list:
-                ## If JSON data set is OK, then make initial population
-                population = pop.Population(loader.data, instances=ins)
-                population.populate()
+            for ins in num_inst_list:
+                for met in methods_list:
+                    # If JSON data set is OK, then make initial population
+                    population = pop.Population(data=loader.data,
+                                                instances=ins,
+                                                method=met)
+                    population.populate()
 
-                if population.error == None:
-                    ## If population is feasible, then make the timetable
-                    population.fit()
+                    if population.error is None:
+                        # If population is feasible, then make the timetable
+                        population.fit()
 
-                    ## At the end of work, save the results
-                    saver = ls.Saver(population.results)
-                    saver.save_results(data_set_files)
+                        # At the end of work, save the results
+                        saver = ls.Saver(population.results)
+                        saver.save_results(out_dir)
 
     return
 
 
 if __name__ == '__main__':
-    data_set_list = list(map(lambda index: f"../inputs/test{index}", range(1, 5)))
-    print("Hola")
-    instances_list = [10, 50]
+    how_many_sets = 2
 
-    process_data_sets(data_set_list, instances_list)
+    in_dir_list = list(map(lambda index: f"../inputs/test{index}", range(1, how_many_sets + 1)))
+    out_dir_list = list(map(lambda index: f"../outputs/test{index}", range(1, how_many_sets + 1)))
+    num_instances_list = [10, 50] # test different population cardinalities
+    op_method_list = ['mute1', 'mute2']  # test the diferents operators for mutation
+
+    process_data_sets(in_dir_list, out_dir_list, num_instances_list, op_method_list)
+
+    print("End of process.")
