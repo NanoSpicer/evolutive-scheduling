@@ -1,0 +1,32 @@
+[
+  {
+    "idClase": 1,
+    "nombre": "1 ESO",
+    "totalHorasSemanales": 12
+  },
+  {
+    "idClase": 2,
+    "nombre": "2 ESO",
+    "totalHorasSemanales": 12
+  },
+  {
+    "idClase": 3,
+    "nombre": "3 ESO",
+    "totalHorasSemanales": 12
+  },
+  {
+    "idClase": 4,
+    "nombre": "4 ESO",
+    "totalHorasSemanales": 12
+  },
+  {
+    "idClase": 5,
+    "nombre": "1 Bachillerato",
+    "totalHorasSemanales": 12
+  },
+  {
+    "idClase": 6,
+    "nombre": "2 Bachillerato",
+    "totalHorasSemanales": 12
+  }
+]

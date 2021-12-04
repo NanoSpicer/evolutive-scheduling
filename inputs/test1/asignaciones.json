@@ -1,0 +1,110 @@
+[
+  {
+    "idClase": 4,
+    "idProfesor": 5,
+    "idAsignatura": 10,
+    "horas": 2
+  },
+  {
+    "idClase": 2,
+    "idProfesor": 6,
+    "idAsignatura": 15,
+    "horas": 3
+  },
+  {
+    "idClase": 6,
+    "idProfesor": 5,
+    "idAsignatura": 18,
+    "horas": 3
+  },
+  {
+    "idClase": 2,
+    "idProfesor": 2,
+    "idAsignatura": 3,
+    "horas": 2
+  },
+  {
+    "idClase": 3,
+    "idProfesor": 3,
+    "idAsignatura": 5,
+    "horas": 4
+  },
+  {
+    "idClase": 4,
+    "idProfesor": 7,
+    "idAsignatura": 16,
+    "horas": 2
+  },
+  {
+    "idClase": 1,
+    "idProfesor": 5,
+    "idAsignatura": 2,
+    "horas": 4
+  },
+  {
+    "idClase": 2,
+    "idProfesor": 8,
+    "idAsignatura": 9,
+    "horas": 3
+  },
+  {
+    "idClase": 5,
+    "idProfesor": 6,
+    "idAsignatura": 7,
+    "horas": 3
+  },
+  {
+    "idClase": 6,
+    "idProfesor": 1,
+    "idAsignatura": 6,
+    "horas": 1
+  },
+  {
+    "idClase": 5,
+    "idProfesor": 8,
+    "idAsignatura": 1,
+    "horas": 3
+  },
+  {
+    "idClase": 3,
+    "idProfesor": 8,
+    "idAsignatura": 17,
+    "horas": 3
+  },
+  {
+    "idClase": 3,
+    "idProfesor": 2,
+    "idAsignatura": 11,
+    "horas": 3
+  },
+  {
+    "idClase": 5,
+    "idProfesor": 3,
+    "idAsignatura": 13,
+    "horas": 3
+  },
+  {
+    "idClase": 4,
+    "idProfesor": 4,
+    "idAsignatura": 4,
+    "horas": 3
+  },
+  {
+    "idClase": 1,
+    "idProfesor": 1,
+    "idAsignatura": 14,
+    "horas": 4
+  },
+  {
+    "idClase": 1,
+    "idProfesor": 7,
+    "idAsignatura": 8,
+    "horas": 2
+  },
+  {
+    "idClase": 6,
+    "idProfesor": 4,
+    "idAsignatura": 12,
+    "horas": 3
+  }
+]

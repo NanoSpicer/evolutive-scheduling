@@ -1,0 +1,74 @@
+[
+  {
+    "nombre": "Mates",
+    "idAsignatura": 1
+  },
+  {
+    "nombre": "Física",
+    "idAsignatura": 2
+  },
+  {
+    "nombre": "Sociales",
+    "idAsignatura": 3
+  },
+  {
+    "nombre": "Historia",
+    "idAsignatura": 4
+  },
+  {
+    "nombre": "Geografia",
+    "idAsignatura": 5
+  },
+  {
+    "nombre": "Arte",
+    "idAsignatura": 6
+  },
+  {
+    "nombre": "Filosofia",
+    "idAsignatura": 7
+  },
+  {
+    "nombre": "Castellano",
+    "idAsignatura": 8
+  },
+  {
+    "nombre": "Catalan",
+    "idAsignatura": 9
+  },
+  {
+    "nombre": "Inglés",
+    "idAsignatura": 10
+  },
+  {
+    "nombre": "Aleman",
+    "idAsignatura": 11
+  },
+  {
+    "nombre": "Educación Física",
+    "idAsignatura": 12
+  },
+  {
+    "nombre": "Ética",
+    "idAsignatura": 13
+  },
+  {
+    "nombre": "Religión",
+    "idAsignatura": 14
+  },
+  {
+    "nombre": "Economía",
+    "idAsignatura": 15
+  },
+  {
+    "nombre": "Biología",
+    "idAsignatura": 16
+  },
+  {
+    "nombre": "Química",
+    "idAsignatura": 17
+  },
+  {
+    "nombre": "Música",
+    "idAsignatura": 18
+  }
+]
