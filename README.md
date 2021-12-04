@@ -18,7 +18,8 @@ esté disponible en determinadas horas de la semana.
 * Las franjas horarias semanales disponibles para impartir las clases. (del centro)
 
 <div align="center">
-  <img src="class.jpeg" height="480">
+  <img src="class.jpeg" height="602" 
+alt="Fotografia de la pizarra con la lista de las restricciones puestas en común">
 </div>
 
 
@@ -39,7 +40,7 @@ esté disponible en determinadas horas de la semana.
 
 3. Penalizar los horarios de cursos que tengan asignaturas con más de 2 horas de docencia de la misma asignatura por día.
 
-4. Penalizar los horarios de curso que tengan mas de dos horas la misma asignatura (curso)
+4. Penalizar los horarios de curso que tengan más de dos horas la misma asignatura (curso)
 
 5. Penalizar los horarios de cursos en los que una misma asignatura se imparte de forma no consecutiva en el mismo día.
 
@@ -70,7 +71,7 @@ Un numero de clases arbitrario (10)
 Número entero (23)
 
 ### Disponibilidad del profesor
-Array de 7 posiciones donde la posicion 0 representa Lunes y el 6 representa el Domingo
+Array de 7 posiciones donde la posicion 0 representa lunes y el 6 representa el domingo
 
 Sin disponibilidad
 ```json
@@ -111,7 +112,7 @@ Vienen dadas por un grupo de materias y un número total de horas semanales
 {
   "idClase": 1,
   "nombre": "3B",
-  "totalHorasSemanales": 12,
+  "totalHorasSemanales": 12
 }
 ``` 
 ### Asignación
@@ -125,12 +126,14 @@ Vienen dadas por un grupo de materias y un número total de horas semanales
 ``` 
 ### Asignatura
 ```json
-{
-  "idAsignatura": 1,
-  "nombre": "Mates"
-},
-{
-  "idAsignatura": 2,
-  "nombre": "Fisica"
-}
+[
+  {
+    "idAsignatura": 1,
+    "nombre": "Mates"
+  },
+  {
+    "idAsignatura": 2,
+    "nombre": "Física"
+  }
+]
 ```
