@@ -18,9 +18,6 @@ import load_save as ls
 import population as pop
 
 
-
-
-
 # Main program
 #
 def process_data_sets(ds_list: list, instances_list: list):
@@ -50,7 +47,7 @@ def process_data_sets(ds_list: list, instances_list: list):
 
 if __name__ == '__main__':
     data_set_list = list(map(lambda index: f"../inputs/test{index}", range(1, 5)))
-
+    print("Hola")
     instances_list = [10, 50]
 
     process_data_sets(data_set_list, instances_list)
