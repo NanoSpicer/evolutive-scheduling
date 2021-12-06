@@ -30,9 +30,9 @@ def process_data_sets(in_list: list, out_list: list, num_inst_list: list, method
             for ins in num_inst_list:
                 for met in methods_list:
                     # If JSON data set is OK, then make initial population
-                    population = pop.Population(data=loader.data,
-                                                instances=ins,
-                                                method=met)
+                    population = pop.Population(inputs=loader.data,
+                                                n_ins=ins,
+                                                met=met)
                     population.populate()
 
                     if population.error is None:
