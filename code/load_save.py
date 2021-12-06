@@ -10,6 +10,7 @@ Class Loader:
 class Loader:
     def __init__(self):
         self.data = None
+        # TODO: Add input sanitization
         self.error = None
 
     def load(self, in_files_dir):
