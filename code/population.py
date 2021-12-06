@@ -15,19 +15,26 @@ import genotype as gen
 
 class Population:
 
-    def __init__(self, inputs: object, n_ins: int, met: object) -> object:
-
+    def __init__(self, inputs: object, population_size: int, met: object) -> object:
+        """
+        Initial population operator.
+        When an instance is constructed, the initial population is also created
+        """
         self.inputs = inputs
-        self.n_ins = n_ins  # how many genotype instances (i.e. cardinality of population)
+        self.population_size = population_size  # how many genotype instances (i.e. cardinality of population)
+        self.population = list(
+            map(
+                lambda _: gen.Genotype(
+                    inputs['profesores'],
+                    inputs['asignaturas'],
+                    inputs['asignaciones']
+                ),
+                range(population_size)
+            )
+        )
         self.method = met
         self.results = None
         self.error = None
-
-    def populate(self):
-        """
-        Initial population operator
-        """
-        pass
 
     def select(self, n_sets: int, p_instances: int):
         """
