@@ -13,7 +13,27 @@ class Loader:
         self.error = None
 
     def load(self, in_files_dir):
-        pass
+        archivos = [
+            "asignaciones",
+            "asignaturas",
+            "clases",
+            "horario",
+            "profesores"
+        ]
+
+        complete_relative_paths = list(
+            map(lambda nombre_archivo: f"{in_files_dir}/{nombre_archivo}.json", archivos)
+        )
+        self.data = {}
+        index = 0
+        for dir in complete_relative_paths:
+            with open(dir) as file:
+                values = json.load(file)
+                key = archivos[index]
+                self.data[key] = values
+            index += 1
+
+        return self.data
 
 
 """
