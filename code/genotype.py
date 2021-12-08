@@ -136,7 +136,7 @@ class Genotype:
         """
         pass
 
-    def mute(self) -> bool:
+    def mutate(self) -> bool:
         """
         Mutation operator: makes a feasible mutation
 
