@@ -13,12 +13,10 @@
 # system libraries
 import os
 
-
 # Our own classes
 #
 import load_save as ls
 import population as pop
-
 
 # Main program
 #
@@ -38,7 +36,6 @@ def process_data_sets(in_list: list, out_list: list, num_inst_list: list, method
                     population = pop.Population(inputs=loader.data,
                                                 population_size=ins,
                                                 met=met)
-                    population.populate()
 
                     if population.error is None:
                         # If population is feasible, then make the timetable
@@ -64,7 +61,7 @@ if __name__ == '__main__':
                            range(1, HOW_MANY_SETS + 1)))
     out_dir_list = list(map(lambda index: f"{outputs_abs_path}{index}",
                             range(1, HOW_MANY_SETS + 1)))
-    num_instances_list = [10, 50] # test different population cardinalities
+    num_instances_list = [10, 50]  # test different population cardinalities
     op_method_list = ['mute1', 'mute2']  # test the diferents operators for mutation
 
     process_data_sets(in_dir_list, out_dir_list, num_instances_list, op_method_list)
