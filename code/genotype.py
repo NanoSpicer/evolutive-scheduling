@@ -126,7 +126,7 @@ class Genotype:
                 matrix_col_index = ((weekday_index * 24) + available_hour)
                 prof_row[matrix_col_index] = AVAILABLE
 
-            weekday_index+=1
+            weekday_index += 1
 
     def evaluate(self) -> float:
         """
