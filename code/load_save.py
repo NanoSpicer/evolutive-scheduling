@@ -6,6 +6,7 @@ Class Loader:
     It loads data from JSON files to memory structures
 """
 
+import genotype as gen
 import our_error as err
 
 class Loader:
@@ -44,8 +45,14 @@ Class Saver:
 """
 
 class Saver:
-    def __init__(self, results: object):
+    def __init__(self, best_genotype: gen.Genotype,
+                 results: list, hiperpar: dict):
+        self.best_genotype = best_genotype
+        self.results = results
+        self.hiperpar = hiperpar
         pass
 
     def save_results(self, out_files_dir):
+        # TODO save genotype and results as JSON
+        print(self.results)
         pass

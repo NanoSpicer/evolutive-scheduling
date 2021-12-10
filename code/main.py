@@ -40,10 +40,12 @@ def process_data_sets(in_list: list, out_list: list, num_inst_list: list, method
 
                     if not population.error.has_error():
                         # If population is feasible, then make the timetable
-                        population.fit()
+                        population.fit(iterations=5)
 
                         # At the end of work, save the results
-                        saver = ls.Saver(population.results)
+                        saver = ls.Saver(population.get_champion(),
+                                         population.get_results(),
+                                         population.get_hiperpar())
                         saver.save_results(out_dir)
                     else:
                         population.error.print()

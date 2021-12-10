@@ -24,8 +24,10 @@ class Population:
         Initial population operator.
         When an instance is constructed, the initial population is also created
         """
-        self.method = met
-        self.results = None
+        self.best_score: int = -1  # the best score, it's updated by 'evaluate' function
+        self.champion_index: int = -1  # the pos of the best genotype in population list, updated by 'evaluate' func
+        self.results = []  # historical list of best scores
+        self.method = met  # which method will use in operators
         self.error = err.OurError()
         self.inputs = inputs
         self.population_size = population_size  # how many genotype instances (i.e. cardinality of population)
@@ -43,6 +45,20 @@ class Population:
         if self.population[0].error.has_error():
             self.population[0].error.print()
             self.error.set_error(err.ERR_POPULATION_NOT_STABLISHED)
+
+    def get_hiperpar(self) -> dict:
+        # Returns hiperparameters
+        hiper = {'population_size': self.population_size,
+                 'method': self.method}
+        return hiper
+
+    def get_champion(self) -> gen.Genotype:
+        # Returns the best one
+        return self.population[self.champion_index]
+
+    def get_results(self):
+        # Returns the historical score list
+        return self.results
 
     def select_parents(self):
         """
@@ -102,20 +118,37 @@ class Population:
         for genotype in self.population:
             genotype.mutate()
 
+    def evaluate_population(self):
+        for genotype in self.population:
+            genotype.evaluate()
+        pass
 
-    def fit(self, iterations: int = 10000):
+    def update_best_score(self):
+        new_best_score = -1
+        new_champion_index = -1
+        for index, genotype in enumerate(self.population):
+            if (genotype.score < new_best_score) or (new_best_score == -1):
+                new_best_score = genotype.score
+                new_champion_index = index
+        self.champion_index = new_champion_index
+        self.best_score = new_best_score
+        self.results.append(new_best_score)
+        pass
+
+    def fit(self, iterations: int = 100):
         """
         Start evolutive algorithm until iterations exhaust
 
         :param iterations: number of iterations to execute
         :return: nothing
         """
-        cpt = 0
-        while cpt < iterations:
+        for it in range(iterations):
             list_of_parents = self.select_parents()
             self.crossover(list_of_parents)
             self.mutate_population()
+            self.evaluate_population()
             self.select_survivors()
-            cpt += 1
+            self.update_best_score()
+            print(f"Iteration {it + 1} form {iterations}. Fitness value: {self.best_score}")
 
         return 0.5

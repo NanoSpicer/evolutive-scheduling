@@ -43,6 +43,7 @@ class Genotype:
     # La lista de todos los profesores con sus tareas asignadas
 
     def __init__(self, prof_list, subject_list, assign_list):
+        self.score: int = 0  # my score, it's updated by the function 'evaluate'
         self.assignations_by_id = {assignment['id']: assignment for assignment in assign_list}
         self.prof_list = prof_list
         self.subject_list = subject_list
@@ -144,12 +145,61 @@ class Genotype:
 
             weekday_index += 1
 
-    def evaluate(self) -> float:
-        """
-        Fitness function: evaluates hard and soft rules and calculates the score
+    def _soft_rule1(self) -> int:
 
-        Returns: float with score
+        return random.randrange(0, 40)
+
+    def _soft_rule2(self) -> int:
+
+        return random.randrange(0, 40)
+
+    def _soft_rule3(self) -> int:
+
+        return random.randrange(0, 40)
+
+    def _soft_rule4(self) -> int:
+
+        return random.randrange(0, 40)
+
+    def _soft_rule5(self) -> int:
+
+        return random.randrange(0, 40)
+
+    def _soft_rule6(self) -> int:
+
+        return random.randrange(0, 40)
+
+    def _soft_rule7(self) -> int:
+
+        return random.randrange(0, 40)
+
+    def _hard_rule1(self) -> int:
+
+        return random.randrange(0, 20)
+
+    def _get_rules_vector(self) -> list:
+
+        rules_duples = [
+            [1e6, self._hard_rule1],
+            [700, self._soft_rule1],
+            [600, self._soft_rule2],
+            [500, self._soft_rule3],
+            [400, self._soft_rule4],
+            [300, self._soft_rule5],
+            [200, self._soft_rule6],
+            [100, self._soft_rule7]
+        ]
+
+        return rules_duples
+
+    def evaluate(self):
         """
+        Fitness function: evaluates rules and saves the score
+        """
+        new_score = 0
+        for rt in self._get_rules_vector():
+            new_score += rt[0] * rt[1]()
+        self.score = new_score
         pass
 
     def mutate(self) -> bool:
