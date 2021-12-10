@@ -27,7 +27,7 @@ class Loader:
         self.data = {}
         index = 0
         for dir in complete_relative_paths:
-            with open(dir) as file:
+            with open(dir, encoding='utf_8') as file:
                 values = json.load(file)
                 key = archivos[index]
                 self.data[key] = values

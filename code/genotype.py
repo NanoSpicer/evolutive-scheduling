@@ -4,11 +4,25 @@ Class Genotype:
     It codes the genotype representation and provides:
     - evaluation function (fitness function)
 """
-import random
 
+import random
 import numpy as np
 
+#
+# Constants
+#
 
+# Related to slots set
+DAYS_PER_WEEK = 7
+SLOTS_PER_DAY = 24
+
+HOURS_IN_DAY = list(range(SLOTS_PER_DAY))
+
+# Mark slots as ...
+NOT_AVAILABLE = -1
+AVAILABLE = 0
+
+# Days of week
 MONDAY = 0
 TUESDAY = 1
 WEDNESDAY = 2
@@ -18,20 +32,21 @@ SATURDAY = 5
 SUNDAY = 6
 
 
-NOT_AVAILABLE = -1
-AVAILABLE = 0
+#
+# Class Genotype()
+#
 
-HOURS_IN_DAY = list(range(24))
-# La lista de todos los profesores con sus tareas asignadas
+
 class Genotype:
+    # La lista de todos los profesores con sus tareas asignadas
 
     def __init__(self, prof_list, subject_list, assign_list):
-        self.assignations_by_id = { assignment['id']: assignment for assignment in assign_list }
+        self.assignations_by_id = {assignment['id']: assignment for assignment in assign_list}
         self.prof_list = prof_list
         self.subject_list = subject_list
         self.assign_list = assign_list
         self.row_count = len(prof_list)
-        self.col_count = 1 + 7 * 24
+        self.col_count = 1 + DAYS_PER_WEEK * SLOTS_PER_DAY
         self.error = None
         self.data_set = np.full(
             (self.row_count, self.col_count),
@@ -44,6 +59,7 @@ class Genotype:
         self._set_initial_assignments()
 
     def _professor_col_index(self):
+        # It's last column
         return self.col_count - 1
 
     def _set_professors_availability(self):
@@ -55,13 +71,10 @@ class Genotype:
             self._set_availability(prof_row, prof)
             i += 1
 
-    def _random_col_index(self):
-        return random.randrange(0, self.col_count)
-
     def _find_row_index_for_professor_id(self, prof_id):
         index = 0
+        prof_id_col_index = self._professor_col_index()
         for row in self.data_set:
-            prof_id_col_index = self._professor_col_index()
             if row[prof_id_col_index] == prof_id:
                 return index
             index += 1
@@ -83,7 +96,7 @@ class Genotype:
     def _do_random_assignment(self, assignation, row_index):
         hours = assignation['horas']
         while hours > 0:
-            random_col_index = self._random_col_index()
+            random_col_index = random_slot_index()
             if self._can_be_assigned(assignation, row_index, random_col_index):
                 self.data_set[row_index][random_col_index] = assignation['id']
                 hours -= 1
@@ -102,20 +115,18 @@ class Genotype:
         # no existe celda en columna cuya idClase sea igual al idClase de asignation
         for row in self.data_set:
             cell_value = row[col_index]
-            # cell_value can be: -1, 0 or the id_assignament
-            cell_assignation = self.assignations_by_id[cell_value]
-            if cell_assignation['idClase'] == assignation['idClase']:
-                return True
+            # cell_value can be: NOT_AVAILABLE (-1), AVAILABLE (0) or the id_assignament
+            if slot_value_is_assigned(cell_value):
+                cell_assignation = self.assignations_by_id[cell_value]
+                if cell_assignation['idClase'] == assignation['idClase']:
+                    return True
 
         return False
 
     @staticmethod
-    def _count_available_slots_for_row(row):
-        available_slots = sum(
-            lambda x: 1 if x == AVAILABLE else 0,
-            row[:-1]  # remove last column
-        )
-        return available_slots
+    def _count_available_slots_for_row(row: np.ndarray) -> int:
+
+        return (row == AVAILABLE).sum()
 
     @staticmethod
     def _set_availability(prof_row: list, profesor):
@@ -143,3 +154,13 @@ class Genotype:
         Returns True or False accordingly
         """
         pass
+
+
+def random_slot_index():
+    # gets a random slot index
+    return random.randrange(0, DAYS_PER_WEEK * SLOTS_PER_DAY)
+
+
+def slot_value_is_assigned(slot_value: int) -> bool:
+    # True if slot_value is a valid assignment id
+    return not (slot_value == NOT_AVAILABLE or slot_value == AVAILABLE)

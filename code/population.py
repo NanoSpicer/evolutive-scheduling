@@ -2,7 +2,7 @@
 Class Population():
 
     It contains a population representation and provides:
-    - population operator (initial population)
+    - population operator (initial population done at init)
     - selection operator
     - mutation operator
     - crossover operator (reproduction)
@@ -40,10 +40,12 @@ class Population:
 
     def select_parents(self):
         """
-        Selection operator: selects n_sets sets of p_instances each one
+        Selection operator: selects the parents couples
+
+        Method: random shuffle
         """
         population = list.copy(self.population)
-        shuffled_population = random.shuffle(population)
+        shuffled_population = random.sample(population, len(population))
         return items_as_pairs(shuffled_population)
 
     def select_survivors(self):
@@ -59,7 +61,7 @@ class Population:
         """
         for (parent1, parent2) in list_of_parents:
             # parent1: genotype
-            num = random.randrange(0, 7*24)
+            num = gen.random_slot_index()
             child1 = self.make_child(parent1, parent2, num)
             child2 = self.make_child(parent2, parent1, num)
             self.population.append(child1)
@@ -67,15 +69,15 @@ class Population:
 
         self.mutate_population()
 
-    def make_child(self, parent1: gen.Genotype, parent2: gen.Genotype, num: int) -> gen.Genotype:
-        child1 = copy.deepcopy(parent1)
+    def make_child(self, parent1: gen.Genotype, parent2: gen.Genotype, partition: int) -> gen.Genotype:
+        new_child = copy.deepcopy(parent1)
         data_set2 = parent2.data_set
 
-        for (index_row, row) in enumerate(child1.data_set):
-            numeros_de_la_derecha = row[num:]
+        for (index_row, row) in enumerate(new_child.data_set):
+            numeros_de_la_derecha = row[partition:]
             numeros_interesantes = list(
                 filter(
-                    lambda el: el != gen.AVAILABLE and el != gen.NOT_AVAILABLE,
+                    lambda el: gen.slot_value_is_assigned(el),  # el != gen.AVAILABLE and el != gen.NOT_AVAILABLE,
                     list(numeros_de_la_derecha)
                 )
             )
@@ -86,9 +88,9 @@ class Population:
                 for cell in row_p2:
                     if cell in numeros_interesantes:
                         numeros_interesantes.remove(cell)
-                        row[num + index_col] = cell
+                        row[partition + index_col] = cell
                         break
-        return child1
+        return new_child
 
     def mutate_population(self):
         for genotype in self.population:

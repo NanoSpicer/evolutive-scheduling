@@ -1,3 +1,6 @@
+"""
+Some utilities
+"""
 
 
 def pairwise(items: list) -> list:
@@ -7,6 +10,7 @@ def pairwise(items: list) -> list:
         pairs.append((previous, current))
         previous = current
     return pairs[1:]  # remove first element as previous is going to be none
+
 
 def items_as_pairs(items: list) -> list:
     por_pares = pairwise(items)
