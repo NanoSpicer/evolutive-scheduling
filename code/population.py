@@ -11,6 +11,8 @@ import copy
 import random
 import numpy as np
 
+import our_error as err
+
 from utils import items_as_pairs
 import genotype as gen
 
@@ -22,6 +24,9 @@ class Population:
         Initial population operator.
         When an instance is constructed, the initial population is also created
         """
+        self.method = met
+        self.results = None
+        self.error = err.OurError()
         self.inputs = inputs
         self.population_size = population_size  # how many genotype instances (i.e. cardinality of population)
         self.population = list(
@@ -34,9 +39,10 @@ class Population:
                 range(population_size)
             )
         )
-        self.method = met
-        self.results = None
-        self.error = None
+        # If error in first genotype, propagate error
+        if self.population[0].error.has_error():
+            self.population[0].error.print()
+            self.error.set_error(err.ERR_POPULATION_NOT_STABLISHED)
 
     def select_parents(self):
         """

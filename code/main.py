@@ -24,11 +24,12 @@ import population as pop
 def process_data_sets(in_list: list, out_list: list, num_inst_list: list, methods_list: list):
     for in_dir, out_dir in zip(in_list, out_list):
 
+        print(f"Loading set: {in_dir}")
         # Load data from JSON set
         loader = ls.Loader()
         loader.load(in_dir)
 
-        if loader.error is None:
+        if not loader.error.has_error():
 
             for ins in num_inst_list:
                 for met in methods_list:
@@ -37,13 +38,17 @@ def process_data_sets(in_list: list, out_list: list, num_inst_list: list, method
                                                 population_size=ins,
                                                 met=met)
 
-                    if population.error is None:
+                    if not population.error.has_error():
                         # If population is feasible, then make the timetable
                         population.fit()
 
                         # At the end of work, save the results
                         saver = ls.Saver(population.results)
                         saver.save_results(out_dir)
+                    else:
+                        population.error.print()
+        else:
+            loader.error.print()
 
     return
 

@@ -8,6 +8,8 @@ Class Genotype:
 import random
 import numpy as np
 
+import our_error as err
+
 #
 # Constants
 #
@@ -47,7 +49,7 @@ class Genotype:
         self.assign_list = assign_list
         self.row_count = len(prof_list)
         self.col_count = 1 + DAYS_PER_WEEK * SLOTS_PER_DAY
-        self.error = None
+        self.error = err.OurError()
         self.data_set = np.full(
             (self.row_count, self.col_count),
             NOT_AVAILABLE,
@@ -91,7 +93,10 @@ class Genotype:
                 # can do!
                 self._do_random_assignment(assignment, prof_row_index)
             else:
-                self.error = f"Not enough available slots for assignment({assignment['id']})"
+                self.error.set_error(
+                    err.ERR_GENOTYPE_UNDER_SIZED,
+                    f"Not enough available slots for assignment({assignment['id']}"
+                )
 
     def _do_random_assignment(self, assignation, row_index):
         hours = assignation['horas']

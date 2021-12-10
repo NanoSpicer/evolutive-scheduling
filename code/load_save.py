@@ -6,11 +6,13 @@ Class Loader:
     It loads data from JSON files to memory structures
 """
 
+import our_error as err
+
 class Loader:
     def __init__(self):
         self.data = None
         # TODO: Add input sanitization
-        self.error = None
+        self.error = err.OurError()
 
     def load(self, in_files_dir):
         archivos = [
