@@ -32,16 +32,15 @@ class Population:
         self.champion_index: int = -1  # the pos of the best genotype in population list, updated by 'evaluate' func
         self.results = []  # historical list of best scores
         self.error = err.OurError()  # instance our error object
-        self.population = list(
-            map(
-                lambda _: gen.Genotype(
-                    inputs['profesores'],
-                    inputs['asignaturas'],
-                    inputs['asignaciones']
-                ),
-                range(population_size)
-            )
+        crear_genotype = lambda _: gen.Genotype(
+            inputs['profesores'],
+            inputs['asignaturas'],
+            inputs['asignaciones'],
+            inputs['clases'],
+            inputs['horario']
         )
+        self.population = [crear_genotype(i) for i in range(population_size)]
+
         # If error in any genotype instance, then propagate error
         it = 0
         while it < len(self.population) and not self.population[it].error.has_error():
