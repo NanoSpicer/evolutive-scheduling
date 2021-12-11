@@ -417,8 +417,18 @@ class Genotype:
         Mutation operator: makes a feasible mutation
         :prob: mutaion probability
         """
-        # TODO
-        pass
+        assert 0.0 <= prob <= 1.0, 'prob must be between 0 and 1'
+        did_mutate = random.random() <= prob
+
+        if did_mutate:
+            col_index = random.randrange(0, self.col_count)
+            other_col_index = random.randrange(0, self.col_count)
+            tmp_first_col = self.data_set[:, col_index]
+            tmp_other_col = self.data_set[:, other_col_index]
+            self.data_set[:, col_index] = tmp_other_col
+            self.data_set[:, other_col_index] = tmp_first_col
+
+        return did_mutate
 
 
 def random_slot_index():
