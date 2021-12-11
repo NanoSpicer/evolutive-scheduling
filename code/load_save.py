@@ -1,6 +1,8 @@
 import json
 import matplotlib.pyplot as plt
 import datetime
+import numpy as np
+import os
 
 """
 Class Loader: 
@@ -41,6 +43,16 @@ class Loader:
         return self.data
 
 
+
+
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return json.JSONEncoder.default(self, obj)
+
+
+
 """
 Class Saver:
     It serializes and saves results to JSON files
@@ -63,22 +75,18 @@ class Saver:
         self.hiperpar_str = dict2str(hiperpar)
         pass
 
-    def save_results(self, out_files_dir: str):
+    def save_results(self, out_files_dir: str) -> str:
         now = datetime.datetime.now()
         date_mark = now.strftime("%Y%m%d_%H%H")
-        instance_out_dir = f"{out_files_dir}/{date_mark}{self.hiperpar_str}"
-
-        # TODO save genotype and results as JSON
-        # Useful: https://stackoverflow.com/a/47626762/9248718
-
+        instance_out_dir = os.path.normpath(f"{out_files_dir}/{date_mark}{self.hiperpar_str}")
         # print last 10 results
-        print(self.results[-10:])
-
+        # print(self.results[-10:])
         # save results list as plot
         plot_file_name = f"{instance_out_dir}{PLOT_SUFFIX_NAME}{PLOT_EXT_NAME}"
         print(f"Saving fitness function plot to {plot_file_name}")
         self._save_plot_results(plot_file_name)
-        pass
+        best_schedule = self.best_genotype.to_schedule()
+        return json.dumps(best_schedule, cls=NumpyEncoder)
 
     def _save_plot_results(self, file_name: str):
         """
@@ -106,3 +114,12 @@ def dict2str(d: dict) -> str:
     for key in d:
         serial += f"_{key}_{d[key]}"
     return serial
+
+
+def format_json_key(d: dict) -> str:
+    separador = '-'
+    population_size = d['ps']
+    metodo = d['met']
+    prob_mutacion = d['mp']
+    return f"{population_size}{separador}{metodo}{separador}{prob_mutacion}"
+
