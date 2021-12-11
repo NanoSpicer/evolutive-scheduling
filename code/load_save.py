@@ -1,5 +1,6 @@
 import json
-
+import matplotlib.pyplot as plt
+import datetime
 
 """
 Class Loader: 
@@ -8,6 +9,7 @@ Class Loader:
 
 import genotype as gen
 import our_error as err
+
 
 class Loader:
     def __init__(self):
@@ -44,17 +46,62 @@ Class Saver:
     It serializes and saves results to JSON files
 """
 
+#
+# Constants
+#
+
+PLOT_SUFFIX_NAME = "_plot_fitness"
+PLOT_EXT_NAME = ".png"
+
+
 class Saver:
     def __init__(self, best_genotype: gen.Genotype,
                  results: list, hiperpar: dict):
         self.best_genotype = best_genotype
         self.results = results
         self.hiperpar = hiperpar
+        self.hiperpar_str = dict2str(hiperpar)
         pass
 
-    def save_results(self, out_files_dir):
+    def save_results(self, out_files_dir: str):
+        now = datetime.datetime.now()
+        date_mark = now.strftime("%Y%m%d_%H%H")
+        instance_out_dir = f"{out_files_dir}/{date_mark}{self.hiperpar_str}"
+
         # TODO save genotype and results as JSON
 
         # print last 10 results
         print(self.results[-10:])
+
+        # save results list as plot
+        plot_file_name = f"{instance_out_dir}{PLOT_SUFFIX_NAME}{PLOT_EXT_NAME}"
+        print(f"Saving fitness function plot to {plot_file_name}")
+        self._save_plot_results(plot_file_name)
         pass
+
+    def _save_plot_results(self, file_name: str):
+        """
+        Create and save fitness plot to file_name
+        :param file_name:
+        """
+        # creating plotting data
+        xaxis = range(len(self.results))
+        yaxis = self.results
+
+        # plotting
+        plt.figure(1)
+        plt.plot(xaxis, yaxis)
+        plt.xlabel("Iterations")
+        plt.ylabel("Fitness score")
+        plt.title("Fitness function evolution")
+
+        # saving the file
+        plt.savefig(file_name)
+        plt.close()
+        pass
+
+def dict2str(d: dict) -> str:
+    serial = ''
+    for key in d:
+        serial += f"_{key}_{d[key]}"
+    return serial
