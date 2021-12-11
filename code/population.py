@@ -110,15 +110,10 @@ class Population:
 
         for (index_row, row) in enumerate(new_child.data_set):
             numeros_de_la_derecha = row[partition:]
-            numeros_interesantes = list(
-                filter(
-                    lambda el: gen.slot_value_is_assigned(el),  # el != gen.AVAILABLE and el != gen.NOT_AVAILABLE,
-                    list(numeros_de_la_derecha)
-                )
-            )
+            # slot_value_is_assigned --> el != gen.AVAILABLE and el != gen.NOT_AVAILABLE,
+            numeros_interesantes = [el for el in numeros_de_la_derecha if gen.slot_value_is_assigned(el)]
 
             row_p2 = data_set2[index_row]
-
             for (index_col, _) in enumerate(numeros_de_la_derecha):
                 for cell in row_p2:
                     if cell in numeros_interesantes:
