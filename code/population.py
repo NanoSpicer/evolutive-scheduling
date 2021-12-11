@@ -19,18 +19,19 @@ import genotype as gen
 
 class Population:
 
-    def __init__(self, inputs: object, population_size: int, met: object) -> object:
+    def __init__(self, inputs: object, population_size: int, met: object, mutation_prob: float) -> object:
         """
         Initial population operator.
         When an instance is constructed, the initial population is also created
         """
+        self.inputs = inputs
+        self.population_size = population_size  # how many genotype instances (i.e. cardinality of population)
+        self.method = met  # which method will use in some operators
+        self.mutation_prob = mutation_prob
         self.best_score: int = -1  # the best score, it's updated by 'evaluate' function
         self.champion_index: int = -1  # the pos of the best genotype in population list, updated by 'evaluate' func
         self.results = []  # historical list of best scores
-        self.method = met  # which method will use in operators
-        self.error = err.OurError()
-        self.inputs = inputs
-        self.population_size = population_size  # how many genotype instances (i.e. cardinality of population)
+        self.error = err.OurError()  # instance our error object
         self.population = list(
             map(
                 lambda _: gen.Genotype(
@@ -41,15 +42,27 @@ class Population:
                 range(population_size)
             )
         )
-        # If error in first genotype, propagate error
-        if self.population[0].error.has_error():
-            self.population[0].error.print()
-            self.error.set_error(err.ERR_POPULATION_NOT_STABLISHED)
+        # If error in any genotype instance, then propagate error
+        it = 0
+        while it < len(self.population) and not self.population[it].error.has_error():
+            if self.population[it].error.has_error():
+                self.population[it].error.print()
+                self.error.set_error(err.ERR_POPULATION_NOT_STABLISHED)
+            it += 1
+
+        if not self.error.has_error():
+            self.evaluate_population()
+            self.update_best_score()
+        pass
 
     def get_hiperpar(self) -> dict:
-        # Returns hiperparameters
-        hiper = {'population_size': self.population_size,
-                 'method': self.method}
+        # Return hiperparameters dict
+        # ps: population_size
+        # met: selected method to test
+        # mp: mutation probability
+        hiper = {'ps': self.population_size,
+                 'met': self.method,
+                 'mp': self.mutation_prob}
         return hiper
 
     def get_champion(self) -> gen.Genotype:
@@ -116,7 +129,7 @@ class Population:
 
     def mutate_population(self):
         for genotype in self.population:
-            genotype.mutate()
+            genotype.mutate(prob=self.mutation_prob)
 
     def evaluate_population(self):
         for genotype in self.population:
@@ -149,6 +162,9 @@ class Population:
             self.evaluate_population()
             self.select_survivors()
             self.update_best_score()
-            print(f"Iteration {it + 1} form {iterations}. Fitness value: {self.best_score}")
+
+            # Print some feedback progress every 100 iterations ...
+            if it % 100 == 0:
+                print(f"Iteration {it + 1} form {iterations}. Fitness value: {self.best_score}")
 
         return 0.5

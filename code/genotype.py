@@ -60,6 +60,7 @@ class Genotype:
         self._set_professors_availability()
         # Set initial assignments (populate)
         self._set_initial_assignments()
+        pass
 
     def _professor_col_index(self):
         # It's last column
@@ -98,6 +99,7 @@ class Genotype:
                     err.ERR_GENOTYPE_UNDER_SIZED,
                     f"Not enough available slots for assignment({assignment['id']}"
                 )
+                self.error.print()
 
     def _do_random_assignment(self, assignation, row_index):
         hours = assignation['horas']
@@ -146,34 +148,49 @@ class Genotype:
             weekday_index += 1
 
     def _soft_rule1(self) -> int:
+        # 1. Penalizar los horarios de cursos con muchas horas en el mismo día (> 8 horas).
 
         return random.randrange(0, 40)
 
     def _soft_rule2(self) -> int:
+        # 2. Penalizar los horarios de profesores con muchas horas en el mismo día.
 
         return random.randrange(0, 40)
 
     def _soft_rule3(self) -> int:
+        # 3. Penalizar los horarios de cursos que tengan asignaturas con más de 2 horas de docencia de la misma asignatura por día.
 
         return random.randrange(0, 40)
 
     def _soft_rule4(self) -> int:
+        # 4. Penalizar los horarios de curso que tengan más de dos horas la misma asignatura (curso)
 
         return random.randrange(0, 40)
 
     def _soft_rule5(self) -> int:
+        # 5. Penalizar los horarios de cursos en los que una misma asignatura se imparte de forma no consecutiva en el mismo día.
 
         return random.randrange(0, 40)
 
     def _soft_rule6(self) -> int:
+        # 6. Penalizar los horarios de cursos que tengan huecos. ¡Esta condición está entre hard y soft!.
 
         return random.randrange(0, 40)
 
     def _soft_rule7(self) -> int:
+        # 7. Penalizar los horarios de profesores que tengan huecos.
+
+        return random.randrange(0, 40)
+
+    def _soft_rule8(self) -> int:
+        # 8. Penalizar los horarios de profesores con horas vacías al principio del día. Es decir promover que las horas vacías estén al final del día.
 
         return random.randrange(0, 40)
 
     def _hard_rule1(self) -> int:
+        #1. Un profesor no puede estar en dos aulas distintas a la vez. Esta es ignorable si en nuestra representación, población, y operador de mutación lo tenemos en cuenta.
+        #2. Un profesor no puede impartir la asignatura, si no está en el centro.
+        #3. Dos asignaturas del mismo curso no pueden coincidir en el tiempo (solaparse).
 
         return random.randrange(0, 20)
 
@@ -187,7 +204,8 @@ class Genotype:
             [400, self._soft_rule4],
             [300, self._soft_rule5],
             [200, self._soft_rule6],
-            [100, self._soft_rule7]
+            [100, self._soft_rule7],
+            [50, self._soft_rule8]
         ]
 
         return rules_duples
@@ -202,12 +220,12 @@ class Genotype:
         self.score = new_score
         pass
 
-    def mutate(self) -> bool:
+    def mutate(self, prob: float) -> bool:
         """
         Mutation operator: makes a feasible mutation
-
-        Returns True or False accordingly
+        :prob: mutaion probability
         """
+        # TODO
         pass
 
 

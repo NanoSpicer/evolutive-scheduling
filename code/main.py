@@ -36,7 +36,8 @@ def process_data_sets(in_list: list, out_list: list, num_inst_list: list, method
                     # If JSON data set is OK, then make initial population
                     population = pop.Population(inputs=loader.data,
                                                 population_size=ins,
-                                                met=met)
+                                                met=met,
+                                                mutation_prob=0.01)
 
                     if not population.error.has_error():
                         # If population is feasible, then make the timetable
