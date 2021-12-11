@@ -1,7 +1,19 @@
 """
 Some utilities
 """
+def windowed(items: list, window_size: int)-> list:
+    n_items = len(items)
+    start = 0
+    final_index = start + window_size
+    result = []
 
+    while final_index <= n_items:
+        sublista = items[start:final_index]
+        result.append(sublista)
+        start += 1
+        final_index = start + window_size
+
+    return result
 
 def pairwise(items: list) -> list:
     previous = None
