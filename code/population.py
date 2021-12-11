@@ -83,7 +83,10 @@ class Population:
         return items_as_pairs(shuffled_population)
 
     def select_survivors(self):
-        return []  # todo
+        n_survivors = self.population_size
+        # Ordena de manera ascendente de manera predeterminada
+        population_sorted = sorted(self.population, key=lambda genotype: genotype.score)
+        self.population = population_sorted[:n_survivors]
 
     def crossover(self, list_of_parents):
         # list_of_parents: [(p1, p2), (p3, p4)]
