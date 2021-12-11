@@ -54,6 +54,7 @@ class Saver:
 
     def save_results(self, out_files_dir):
         # TODO save genotype and results as JSON
+        # Useful: https://stackoverflow.com/a/47626762/9248718
 
         # print last 10 results
         print(self.results[-10:])
