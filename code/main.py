@@ -11,6 +11,7 @@
 # Lluís Bernat
 
 # system libraries
+import json
 import os
 
 # Our own classes
@@ -30,7 +31,7 @@ def process_data_sets(in_list: list, out_list: list, num_inst_list: list, method
         loader.load(in_dir)
 
         if not loader.error.has_error():
-
+            resultados = {}
             for ins in num_inst_list:
                 for met in methods_list:
                     # If JSON data set is OK, then make initial population
@@ -39,7 +40,10 @@ def process_data_sets(in_list: list, out_list: list, num_inst_list: list, method
                                                 met=met,
                                                 mutation_prob=0.01)
 
+
                     if not population.error.has_error():
+                        hiper_parametros = population.get_hiperpar()
+                        json_key = ls.format_json_key(hiper_parametros)
                         # If population is feasible, then make the timetable
                         population.fit(iterations=5)
 
@@ -47,9 +51,12 @@ def process_data_sets(in_list: list, out_list: list, num_inst_list: list, method
                         saver = ls.Saver(population.get_champion(),
                                          population.get_results(),
                                          population.get_hiperpar())
-                        saver.save_results(out_dir)
+                        resultados[json_key] = saver.save_results(out_dir)
                     else:
                         population.error.print()
+
+            with open(os.path.normpath(f"{out_dir}/horarios.json"), 'w') as json_file:
+                json.dump(resultados, json_file, cls=ls.NumpyEncoder)
         else:
             loader.error.print()
 
