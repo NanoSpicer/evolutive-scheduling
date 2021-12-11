@@ -143,7 +143,6 @@ class Population:
         self.champion_index = new_champion_index
         self.best_score = new_best_score
         self.results.append(new_best_score)
-        pass
 
     def fit(self, iterations: int = 100):
         """
@@ -164,4 +163,3 @@ class Population:
             if it % 100 == 0:
                 print(f"Iteration {it + 1} form {iterations}. Fitness value: {self.best_score}")
 
-        return 0.5
