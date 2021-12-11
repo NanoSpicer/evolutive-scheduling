@@ -32,16 +32,15 @@ class Population:
         self.champion_index: int = -1  # the pos of the best genotype in population list, updated by 'evaluate' func
         self.results = []  # historical list of best scores
         self.error = err.OurError()  # instance our error object
-        self.population = list(
-            map(
-                lambda _: gen.Genotype(
-                    inputs['profesores'],
-                    inputs['asignaturas'],
-                    inputs['asignaciones']
-                ),
-                range(population_size)
-            )
+        crear_genotype = lambda _: gen.Genotype(
+            inputs['profesores'],
+            inputs['asignaturas'],
+            inputs['asignaciones'],
+            inputs['clases'],
+            inputs['horario']
         )
+        self.population = [crear_genotype(i) for i in range(population_size)]
+
         # If error in any genotype instance, then propagate error
         it = 0
         while it < len(self.population) and not self.population[it].error.has_error():
@@ -84,7 +83,10 @@ class Population:
         return items_as_pairs(shuffled_population)
 
     def select_survivors(self):
-        return []  # todo
+        n_survivors = self.population_size
+        # Ordena de manera ascendente de manera predeterminada
+        population_sorted = sorted(self.population, key=lambda genotype: genotype.score)
+        self.population = population_sorted[:n_survivors]
 
     def crossover(self, list_of_parents):
         # list_of_parents: [(p1, p2), (p3, p4)]
@@ -110,15 +112,10 @@ class Population:
 
         for (index_row, row) in enumerate(new_child.data_set):
             numeros_de_la_derecha = row[partition:]
-            numeros_interesantes = list(
-                filter(
-                    lambda el: gen.slot_value_is_assigned(el),  # el != gen.AVAILABLE and el != gen.NOT_AVAILABLE,
-                    list(numeros_de_la_derecha)
-                )
-            )
+            # slot_value_is_assigned --> el != gen.AVAILABLE and el != gen.NOT_AVAILABLE,
+            numeros_interesantes = [el for el in numeros_de_la_derecha if gen.slot_value_is_assigned(el)]
 
             row_p2 = data_set2[index_row]
-
             for (index_col, _) in enumerate(numeros_de_la_derecha):
                 for cell in row_p2:
                     if cell in numeros_interesantes:

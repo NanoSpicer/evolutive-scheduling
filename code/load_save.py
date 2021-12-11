@@ -69,6 +69,7 @@ class Saver:
         instance_out_dir = f"{out_files_dir}/{date_mark}{self.hiperpar_str}"
 
         # TODO save genotype and results as JSON
+        # Useful: https://stackoverflow.com/a/47626762/9248718
 
         # print last 10 results
         print(self.results[-10:])

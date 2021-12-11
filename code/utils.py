@@ -1,6 +1,29 @@
 """
 Some utilities
 """
+def windowed(items: list, window_size: int)-> list:
+    n_items = len(items)
+    start = 0
+    final_index = start + window_size
+    result = []
+
+    while final_index <= n_items:
+        sublista = items[start:final_index]
+        result.append(sublista)
+        start += 1
+        final_index = start + window_size
+
+    return result
+
+def all_items_are_same(items: list) -> bool:
+    if len(items) == 0 or len(items) == 1:
+        return True
+    primero = items[0]
+    for item in items:
+        if item != primero:
+            return False
+
+    return True
 
 
 def pairwise(items: list) -> list:
