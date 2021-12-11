@@ -15,6 +15,17 @@ def windowed(items: list, window_size: int)-> list:
 
     return result
 
+def all_items_are_same(items: list) -> bool:
+    if len(items) == 0 or len(items) == 1:
+        return True
+    primero = items[0]
+    for item in items:
+        if item != primero:
+            return False
+
+    return True
+
+
 def pairwise(items: list) -> list:
     previous = None
     pairs = []
