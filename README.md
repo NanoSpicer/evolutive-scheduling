@@ -1,4 +1,13 @@
+
+<div align="center">
+
+    # [To see the report click here](doc/Informe.md)
+
+</div>
+
 # Evolutive-scheduling
+
+
 
 Solving a scheduling problem using evolutive algorithms
 
