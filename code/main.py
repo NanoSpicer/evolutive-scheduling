@@ -40,7 +40,7 @@ def process_data_sets(in_list: list, out_list: list, num_inst_list: list, method
                     population = pop.Population(inputs=loader.data,
                                                 population_size=ins,
                                                 met=met,
-                                                mutation_prob=0.05)
+                                                mutation_prob=0.1)
 
                     if not population.error.has_error():
                         hiper_parametros = population.get_hiperpar()
