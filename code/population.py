@@ -175,6 +175,6 @@ class Population:
             self.update_best_score()
 
             # Print some feedback progress every 100 iterations ...
-            if it % 100 == 0:
+            if it % 1 == 0:
                 print(f"Iteration {it + 1} form {iterations}. Fitness value: {self.best_score}")
 

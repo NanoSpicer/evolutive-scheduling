@@ -86,7 +86,7 @@ class Saver:
         print(f"Saving fitness function plot to {plot_file_name}")
         self._save_plot_results(plot_file_name)
         best_schedule = self.best_genotype.to_schedule()
-        return json.dumps(best_schedule, cls=NumpyEncoder)
+        return best_schedule
 
     def _save_plot_results(self, file_name: str):
         """

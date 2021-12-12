@@ -358,19 +358,20 @@ class Genotype:
         return ocurrencias
 
     def _get_rules_vector(self) -> list:
-
+        hard_weight = 1000
+        soft_weight = 10
         rules_duples = [
-            [1e6, self._hard_rule1],
-            [1e6, self._hard_rule2],
-            [1e6, self._hard_rule3],
-            [700, self._soft_rule1],
-            [600, self._soft_rule2],
-            [500, self._soft_rule3],
-            [400, self._soft_rule4],
-            [300, self._soft_rule5],
-            [200, self._soft_rule6],
-            [100, self._soft_rule7],
-            [50, self._soft_rule8]
+            [hard_weight, self._hard_rule1],
+            [hard_weight, self._hard_rule2],
+            [hard_weight, self._hard_rule3],
+            [soft_weight, self._soft_rule1],
+            [soft_weight, self._soft_rule2],
+            [soft_weight, self._soft_rule3],
+            [soft_weight, self._soft_rule4],
+            [soft_weight, self._soft_rule5],
+            [soft_weight, self._soft_rule6],
+            [soft_weight, self._soft_rule7],
+            [soft_weight, self._soft_rule8]
         ]
 
         return rules_duples
