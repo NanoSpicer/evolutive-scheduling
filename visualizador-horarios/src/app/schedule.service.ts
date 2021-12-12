@@ -68,8 +68,8 @@ export class ScheduleService {
           profesores, agregadoHorario
         ] = valores
         // T_ODO! Porque en Python Serializamos el schedule como string
-        // const horario = agregadoHorario[key] as Horario
-        const horario = JSON.parse(agregadoHorario[key]) as Horario
+        const horario = agregadoHorario[key] as Horario
+        // const horario = JSON.parse(agregadoHorario[key]) as Horario
         const dictAsignaturas = groupBy(asignaturas, item => item.idAsignatura)
         const dictClases = groupBy(clases, item => item.idClase)
         const dictProfesores = groupBy(profesores, item => item.idProfesor)

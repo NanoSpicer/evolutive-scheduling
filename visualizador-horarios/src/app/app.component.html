@@ -69,38 +69,37 @@
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
 
-
     <ng-container matColumnDef="Hora">
       <th mat-header-cell *matHeaderCellDef>Hora</th>
-      <td mat-cell *matCellDef="let element">{{element.position}}</td>
+      <td mat-cell *matCellDef="let el" [innerText]="el.hora"></td>
     </ng-container>
 
 
     <ng-container matColumnDef="Lunes">
       <th mat-header-cell *matHeaderCellDef>Lunes</th>
-      <td mat-cell *matCellDef="let element">{{element.name}}</td>
+      <td mat-cell *matCellDef="let el" [innerText]="el.lunes"></td>
     </ng-container>
 
 
     <ng-container matColumnDef="Martes">
       <th mat-header-cell *matHeaderCellDef>Martes</th>
-      <td mat-cell *matCellDef="let element">{{element.weight}}</td>
+      <td mat-cell *matCellDef="let el" [innerText]="el.martes"></td>
     </ng-container>
 
 
     <ng-container matColumnDef="Miercoles">
       <th mat-header-cell *matHeaderCellDef>Miercoles</th>
-      <td mat-cell *matCellDef="let element">{{element.symbol}}</td>
+      <td mat-cell *matCellDef="let el" [innerText]="el.miercoles"></td>
     </ng-container>
 
     <ng-container matColumnDef="Jueves">
       <th mat-header-cell *matHeaderCellDef>Jueves</th>
-      <td mat-cell *matCellDef="let element">{{element.symbol}}</td>
+      <td mat-cell *matCellDef="let el" [innerText]="el.jueves"></td>
     </ng-container>
 
     <ng-container matColumnDef="Viernes">
       <th mat-header-cell *matHeaderCellDef>Viernes</th>
-      <td mat-cell *matCellDef="let element">{{element.symbol}}</td>
+      <td mat-cell *matCellDef="let el" [innerText]="el.viernes"></td>
     </ng-container>
 
 

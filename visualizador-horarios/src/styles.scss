@@ -18,6 +18,30 @@ body {
 
 * {
   font-family: Montserrat;
+
+}
+
+th.mat-header-cell {
+  font-size: large;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid rgba(0,0,0,.54);
+
+  text-align: center !important;
+}
+
+th.mat-header-cell:not(:last-child) {
+  border-right: 1px solid rgba(0,0,0,.54);
+}
+
+td {
+  text-align: center;
+  font-size: medium;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid rgba(0,0,0,.54);
+}
+td:not(:last-child) {
+  border-right: 1px solid rgba(0,0,0,.54);
 }
 
 .flex {
