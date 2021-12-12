@@ -1,9 +1,9 @@
-
+# [Visualizar video antes de realizar las pruebas ](video/demo.mp4)
 # Generación de horarios
 
 ## Identificación
 
-Assignatura: 11753 Inteligencia Computacional
+Asignatura: 11753 Inteligencia Computacional
 
 Estudios: MUSI - UIB - Curso 21/22
 
@@ -11,7 +11,7 @@ Profesor: Dr. Sebastián Massanet Massanet
 (s.massanet@uib.es)
 
 Alumnos: 
-- Natalia Erika Cardona Matamoros
+- Natalia Cardona Matamoros
 (erika-natalia.cardona1@estudiant.uib.cat)
 - Miquel Àngel Roman Colom 
 (miquel-angel.roman1@estudiant.uib.cat)
@@ -88,10 +88,10 @@ y los diferentes operadores
 se analizan los resultados obtenidos para diferentes 
 ejemplos que se suministran.
 - [Cambios y resultados](#Cambios-y-resultados): en 
-este apartado se propone un cambio y se presentan
-las variaciones obtenidas en el desempeño de los ejemplos.
-- [Conclusiones](#Conclusiones): finalmente
-un último apartado de conclusiones finaliza este trabajo.
+este apartado se describen los dos metodos implementados y se presentan sus resultados.
+
+- [Ejemplos de horarios generados](#Ejemplos-de-horarios-generados): finalmente
+adjuntamos unos volcados de pantalla de algunos horarios.
 
 
 ## Restricciones
@@ -106,8 +106,12 @@ Consideramos tres restricciones fuertes:
 
 1. Un profesor no puede impartir la asignatura, si no está en el centro.
 
+
 1. Dos asignaturas del mismo curso no pueden coincidir en el tiempo (solaparse).
 
+Las dos primeras restricciones las cumpliremos teniéndolas en cuenta en la representación del genotipo y en los operadores.
+
+La última restricción la penalizamos en una función de evaluacion a la que asignamos un peso alto.  
 
 ### Conjunto de restricciones *soft*
 
@@ -123,18 +127,107 @@ El conjunto de restricciones débiles es:
 
 5. Penalizar los horarios de cursos en los que una misma asignatura se imparte de forma no consecutiva en el mismo día.
 
-6. Penalizar los horarios de cursos que tengan huecos. ¡Esta condición está entre hard y soft!.
+6. Penalizar los horarios de cursos que tengan huecos. 
 
 7. Penalizar los horarios de profesores que tengan huecos.
 
 8. Penalizar los horarios de profesores con horas vacías al principio del día. Es decir promover que las horas vacías estén al final del día.
 
+Estas restricciones han sido tenidas en cuenta con la implementación de ocho funciones de evaluacion, con un peso más ligero.
 
 ## Implementación
 
 ### Entrada de datos
 
-> Poner estructuras JSON que diseñó MA ...
+El conjunto de entrada de datos se ha implementado mediante ficheros JSON. 
+Seguidamente detallamos su estructura con algunos ejemplos.
+
+
+### Número de clases
+Viene dado por la longitud del array dentro del fichero `clases.json`
+
+### Asignatura
+Tiene la siguiente estructura.
+
+```json
+{
+"nombre": "Mates",
+"idAsignatura": 1
+}
+```
+
+### Disponibilidad del profesor
+Array de 7 posiciones donde la posicion 0 representa lunes y el 6 representa el domingo
+Aqui veremos un ejemplo de la disponibilidad semanal de un profesor. 
+
+```json
+[
+  {
+    "idProfesor": 1,
+    "nombre": "Abie Abelson 🥵🥵",
+    "disponibilidad": [
+      [8,9,10,12,13,14,16,17],
+      [8,9,10,12,13,14,16,17],
+      [8,9,10,12,13,14,16,17],
+      [8,9,10,12,13,14,16,17,18,19],
+      [10, 11, 12],
+      [],
+      []
+    ]
+  }
+]
+```
+
+
+### Horario del instituto
+
+Esta definido dentro del fichero `Horario.json`
+
+* Lista de horas en las que se va a dar clase.
+* Falta el 11 para simular el patio
+* Falta el 15 para simular hora de la comida
+* El jueves es más _heavy_ para que el viernes sea más _light_
+```json
+[ 
+  [8,9,10,12,13,14,16,17], 
+  [8,9,10,12,13,14,16,17], 
+  [8,9,10,12,13,14,16,17], 
+  [8,9,10,12,13,14,16,17,18,19], 
+  [10, 11, 12], 
+  [] ,[] 
+]
+```
+### Clases
+Vienen dadas por un grupo de materias y un número total de horas semanales
+```json
+{
+  "idClase": 1,
+  "nombre": "3B",
+  "totalHorasSemanales": 12
+}
+``` 
+### Asignación
+```json
+{
+  "idClase": 1,
+  "horas": 3,
+  "idAsignatura": 3,
+  "idProfesor": 4
+}
+``` 
+### Asignatura
+```json
+[
+  {
+    "idAsignatura": 1,
+    "nombre": "Mates"
+  },
+  {
+    "idAsignatura": 2,
+    "nombre": "Física"
+  }
+]
+```
 
 ### Genotipo
 
@@ -149,14 +242,14 @@ Todas las celdas de la misma columna representan el mismo *slot* temporal.
 Los *slots* tienen una duración de 60 minutos.
 
 La implementación de este genotipo la haremos 
-usando un diccionario (de *Python*) cuya clave será 
+usando una tabla de *numpy*   cuya  ultima columna contiene 
 el identificador del profesor y su contenido
-una lista de enteros. 
-Por tanto el diccionario poseerá P entradas 
-y por tanto P listas, 
+es una lista de enteros. 
+Por tanto la tabla poseerá P entradas 
+y por tanto P filas, 
 cada una con 168 posiciones (7 x 24), 
 siendo P el cardinal del conjunto de profesores.
-El primer *slot* de la lista se corresponde 
+El primer *slot* de la fila se corresponde 
 con la franja horaria 00:00 a 01:00 del lunes 
 y el último con 
 la franja horaria 23:00 a 24:00 del domingo.
@@ -190,15 +283,15 @@ Los *slots* en los que el profesor sí está disponible,
 pero no tienen ninguna tarea, se marcan con otro valor 
 especial al que llamaremos *Libre*.
 
-### Definición de tarea
+### Asignacion
 
-Cada tarea es un tupla 
+Cada asignacion es un diccionario 
 que consta de los siguientes campos: 
 
-- `idTarea`: entero que actua de clave única 
-para esta tupla. 
+- `id`: entero que actua de clave única 
+para esta entrada. 
 Este valor se le asigna en el momento de su creación
-en memoria de forma secuencial empezando por el número 1.
+en memoria de forma secuencial.
 - `idClase`: entero que identifica 
 de forma unívoca una clase de entre todas las definidas.
 - `horas`: cantidad de *slots* temporales que, 
@@ -207,45 +300,67 @@ deben asignarse a esta tarea.
 - `idAsignatura`: entero que identifica 
 de forma unívoca la asignatura.
 - `idProfesor`: entero que identifica de forma unívoca al profesor.
-- `vidas`: contador del número de asignaciones disponibles.
-Inicialmente (al cargar los datos) se le asigna el mismo valor que `horas` y es decrementado una unidad por cada asignación que se le aplica. 
+
 
 ### Población inicial 
 
-> Algoritmo de población inicial
+En la población inicial generamos un conjunto de genotipos, con el cardinal de la población. 
+Donde tomamos como punto de inicio poblaciones de 30 y de 60 genotipos. 
 
 ### Función de *fitness*
 
-> Pesos de la función
+En esta funcion evaluamos el conjunto de las once restricciones aunque las dos primeras  
+son las restricciones *hard*  que siempre se cumplen, por lo que tienen asignado un peso nulo.
 
 ### Operador de selección
 
-> Cómo elegimos padres y/o supervivientes
+Elegimos los P genotipos instanciados con mayor puntuacion.
+
 
 ### Operador de mutación 
 
-> Permutación de dos tareas 
-o una tarea y un *slot* libre, 
-del mismo profesor (i.e. la misma fila).
+En el operador de mutacion realizamos permutaciones factibles con cierta probabilidad.
 
 ### Operador de recombinación
 
-> Elegir padres, liberar un % de tareas
+En el operador de recombinacion hemos implementado dos metodos: 
+- Metodo 1: se ordenan los padres en base a su puntuacion antes de emparejarlos.
+- Metodo 2: las parejas de padres son realizadas aleatoriamente.
 
 
 ## Pruebas y análisis
 
-> Qué ejemplos hemos probado (posibles e imposibles de resolver)
-y resultados de convergencia y tiempo.
+- Tamaño de poblacion
+
+Cantidad de individuos diferentes que se reproduciran y mutaran.
+
+- Metodos Crossover
+
+Cruzando los mejores padre con las mejores madres y aleatorio.
+
+- Probabilidad de mutacion
+
+Hemos realizado pruebas con 1%,5%,10% y 50%.
+
+- Numero de Iteraciones 
+
+Hemos realizado pruebas con 5, 10, 100 y 500.
+
+- Inputs(asignaturas,horarios,asignaciones,disponibilidad de profesores)
+
+Suministramos 3 conjuntos de datos para las pruebas realizadas.
 
 
 ## Cambios y resultados
 
-> Cambios que hemos implementado y sus resultados.
+
+Metodo 1: (padres emparejados acordes a su puntuacion) 
 
 
-## Conclusiones
-
-> Ánimo que ya terminamos.
+## Ejemplos de horarios generados 
 
 <img src="images/horario1.png">
+<img src="images/horario2.png">
+<img src="images/horario3.png">
+
+ 
