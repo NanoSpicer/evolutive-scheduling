@@ -18,7 +18,7 @@ import os
 #
 import load_save as ls
 import population as pop
-
+import sys
 # Main program
 #
 
@@ -64,7 +64,8 @@ def process_data_sets(in_list: list, out_list: list, num_inst_list: list, method
 
 
 if __name__ == '__main__':
-    HOW_MANY_SETS = 2
+    args = sys.argv
+    HOW_MANY_SETS = [int(sys.argv[1])] if len(args) == 2 else [1,2]
     INPUTS_REL_PATH = '../inputs/test'
     OUTPUTS_REL_PATH = '../outputs/test'
 
@@ -77,7 +78,7 @@ if __name__ == '__main__':
     out_dir_list = list(map(lambda index: f"{outputs_abs_path}{index}",
                             range(1, HOW_MANY_SETS + 1)))
     num_instances_list = [10, 50]  # test different population cardinalities
-    op_method_list = ['metodo1', 'metodo2']  # test the diferents operators for mutation
+    op_method_list = pop.METODOS_DISPONIBLES  # test the diferents operators for mutation
 
     process_data_sets(in_dir_list, out_dir_list, num_instances_list, op_method_list)
 
