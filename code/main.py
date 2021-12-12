@@ -77,7 +77,7 @@ if __name__ == '__main__':
     out_dir_list = list(map(lambda index: f"{outputs_abs_path}{index}",
                             range(1, HOW_MANY_SETS + 1)))
     num_instances_list = [10, 50]  # test different population cardinalities
-    op_method_list = ['mute1', 'mute2']  # test the diferents operators for mutation
+    op_method_list = ['metodo1', 'metodo2']  # test the diferents operators for mutation
 
     process_data_sets(in_dir_list, out_dir_list, num_instances_list, op_method_list)
 
