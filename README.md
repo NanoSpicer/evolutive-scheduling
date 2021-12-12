@@ -1,7 +1,6 @@
-
 <div align="center">
 
-    # [To see the report click here](doc/Informe.md)
+# To see the report click [here](doc/Informe.md)
 
 </div>
 
