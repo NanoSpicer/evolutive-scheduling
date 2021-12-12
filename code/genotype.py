@@ -428,7 +428,7 @@ class Genotype:
         did_mutate = random.random() <= prob
 
         def get_mutable_indexes(row: np.array):
-            return [x for x in row if slot_value_is_assigned(x)]
+            return [i for (i, x) in enumerate(row) if slot_value_is_assigned(x)]
 
         if did_mutate:
             for row in self.data_set:
