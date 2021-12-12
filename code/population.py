@@ -85,8 +85,13 @@ class Population:
     def select_survivors(self):
         n_survivors = self.population_size
         # Ordena de manera ascendente de manera predeterminada
-        population_sorted = sorted(self.population, key=lambda genotype: genotype.score)
+        population_sorted = self.sort_population_by_score()
         self.population = population_sorted[:n_survivors]
+
+    def sort_population_by_score(self):
+        # Ordena de manera ascendente de manera predeterminada
+        return sorted(self.population, key=lambda genotype: genotype.score)
+
 
     def crossover(self, list_of_parents):
         # list_of_parents: [(p1, p2), (p3, p4)]
@@ -113,10 +118,12 @@ class Population:
         for (index_row, row) in enumerate(new_child.data_set):
             numeros_de_la_derecha = row[partition:]
             # slot_value_is_assigned --> el != gen.AVAILABLE and el != gen.NOT_AVAILABLE,
-            numeros_interesantes = [el for el in numeros_de_la_derecha if gen.slot_value_is_assigned(el)]
+            numeros_interesantes = [el for (idx,el) in enumerate(numeros_de_la_derecha) if gen.slot_value_is_assigned(el) and not idx == 168]
 
             row_p2 = data_set2[index_row]
             for (index_col, _) in enumerate(numeros_de_la_derecha):
+                if index_col == 168:
+                    continue
                 for cell in row_p2:
                     if cell in numeros_interesantes:
                         numeros_interesantes.remove(cell)
@@ -131,7 +138,6 @@ class Population:
     def evaluate_population(self):
         for genotype in self.population:
             genotype.evaluate()
-        pass
 
     def update_best_score(self):
         new_best_score = -1
@@ -151,6 +157,7 @@ class Population:
         :param iterations: number of iterations to execute
         :return: nothing
         """
+        self.population = self.sort_population_by_score()
         for it in range(iterations):
             list_of_parents = self.select_parents()
             self.crossover(list_of_parents)
