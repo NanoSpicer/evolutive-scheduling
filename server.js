@@ -7,14 +7,17 @@ app.use(express.static('.'))
 const host = 'http://localhost:8080/'
 async function main() {
     const directoriosTest = (await fs.readdir('outputs')).filter(it => it.startsWith('test'))
-    const testsDisponibles = directoriosTest.map(it => {
-        return {
-            nombre: it,
-            inputs: inputForTest(it),
-            outputs: `${host}outputs/${it}/horarios.json`
-        }
+    
+    app.get('/tests', (_req, res) => {
+        const testsDisponibles = directoriosTest.map(it => {
+            return {
+                nombre: it,
+                inputs: inputForTest(it),
+                outputs: `${host}outputs/${it}/horarios.json`
+            }
+        })
+        res.json(testsDisponibles)
     })
-    app.get('/tests', (_req, res) => res.json(testsDisponibles))
     app.get('/', (req, res) => res.json({ buenas: 'noches' }))
     app.listen(8080, () => console.log('Server is ready!'))
 }
