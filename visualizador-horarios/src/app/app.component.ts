@@ -39,9 +39,9 @@ function asignacionOrNullToString(
   switch(true) {
     case asignacion != null: return asignacion?.asignatura.nombre!
     case asignacion == null && index < 9: return ''
-    case asignacion == null && index < 15: return ''
-    case asignacion == null && index > 8 && index < 12: return 'Recreo'
-    case asignacion == null && index > 12 && index < 16: return 'Comida'
+    case asignacion == null && index > 16: return ''
+    case asignacion == null && index === 11: return 'Recreo'
+    case asignacion == null && index === 15: return 'Comida'
     default: return ''
   }
 }
