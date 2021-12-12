@@ -46,7 +46,7 @@ def process_data_sets(in_list: list, out_list: list, num_inst_list: list, method
                         hiper_parametros = population.get_hiperpar()
                         json_key = ls.format_json_key(hiper_parametros)
                         # If population is feasible, then make the timetable
-                        population.fit(iterations=50)
+                        population.fit(iterations=500)
 
                         # At the end of work, save the results
                         saver = ls.Saver(population.get_champion(),
