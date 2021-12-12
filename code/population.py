@@ -16,6 +16,13 @@ import our_error as err
 from utils import items_as_pairs
 import genotype as gen
 
+METODOS_DISPONIBLES = [
+    'METODO1',
+    'METODO2'
+]
+
+METODO1 = METODOS_DISPONIBLES[0]
+METODO2 = METODOS_DISPONIBLES[1]
 
 class Population:
 
@@ -78,8 +85,9 @@ class Population:
 
         Method: random shuffle
         """
+        metodo = self.method
         population = list.copy(self.population)
-        shuffled_population = random.sample(population, len(population))
+        shuffled_population = random.sample(population, len(population)) if metodo == METODO1 else population
         return items_as_pairs(shuffled_population)
 
     def select_survivors(self):
