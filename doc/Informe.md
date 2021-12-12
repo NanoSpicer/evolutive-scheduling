@@ -1,3 +1,4 @@
+
 # Generación de horarios
 
 ## Identificación
@@ -246,3 +247,5 @@ y resultados de convergencia y tiempo.
 ## Conclusiones
 
 > Ánimo que ya terminamos.
+
+<img src="images/horario1.png">
