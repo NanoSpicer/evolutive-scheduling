@@ -1,5 +1,36 @@
-# [Visualizar video antes de realizar las pruebas ](video/demo.mp4)
 # Generación de horarios
+
+<div align="center">
+
+  [Visualizar video antes de realizar las pruebas ](video/demo.mp4)
+
+</div>
+
+## Ejecutando la solución
+
+### Para generar los horarios:
+
+Python >= 3.7.0 para las dependencias ojear requirements.txt
+
+```bash
+make run  # ejecutara el algoritmo para los inputs dentro de inputs/test{1,2}
+# ejecutara el algoritmo para los inputs dentro de inputs/test3
+# Puedes añadir tus inputs y modificar la receta de make run-once
+make run-once  
+```
+
+**Nota** Los horarios y pantallazos generados se almacenarán dentro del directorio outputs/test{id}
+
+
+### Para visualizar los horarios
+NodeJS >= 14.0.0
+
+```bash
+make start-visor # Y abrir http://localhost:4200/ en un navegador web
+```
+
+
+
 
 ## Identificación
 
@@ -164,7 +195,7 @@ Aqui veremos un ejemplo de la disponibilidad semanal de un profesor.
 [
   {
     "idProfesor": 1,
-    "nombre": "Abie Abelson 🥵🥵",
+    "nombre": "Abie Abelson", 
     "disponibilidad": [
       [8,9,10,12,13,14,16,17],
       [8,9,10,12,13,14,16,17],
@@ -309,8 +340,30 @@ Donde tomamos como punto de inicio poblaciones de 30 y de 60 genotipos.
 
 ### Función de *fitness*
 
-En esta funcion evaluamos el conjunto de las once restricciones aunque las dos primeras  
-son las restricciones *hard*  que siempre se cumplen, por lo que tienen asignado un peso nulo.
+En esta funcion evaluamos el conjunto de las once restricciones aunque las dos primeras 
+son las restricciones *hard* que siempre se cumplen, por lo que tienen asignado un peso nulo.
+
+```python
+def _get_rules_vector(self) -> list:
+    hard_weight = 1000  # Penaliza dos órdenes de magnitud más que una soft
+    soft_weight = 10
+    rules_duples = [
+        [hard_weight, self._hard_rule1], # Cada regla viene implementada 
+        [hard_weight, self._hard_rule2], # como una función de la clase Genotype
+        [hard_weight, self._hard_rule3],
+        [soft_weight, self._soft_rule1],
+        [soft_weight, self._soft_rule2],
+        [soft_weight, self._soft_rule3],
+        [soft_weight, self._soft_rule4],
+        [soft_weight, self._soft_rule5],
+        [soft_weight, self._soft_rule6],
+        [soft_weight, self._soft_rule7],
+        [soft_weight, self._soft_rule8]
+    ]
+
+    return rules_duples
+```
+
 
 ### Operador de selección
 
@@ -354,7 +407,29 @@ Suministramos 3 conjuntos de datos para las pruebas realizadas.
 ## Cambios y resultados
 
 
-Metodo 1: (padres emparejados acordes a su puntuacion) 
+### Graficas del Metodo 1
+Metodo 1: (Los padres se emparejan con aquellas madres de puntación más elevada)
+
+#### Tamaño de poblacion = 30 individuos
+<img src="images/resultados/test3/20211212_1919_ps_30_met_METODO1_mp_0.1_plot_fitness.png">
+
+#### Tamaño de poblacion = 60 individuos
+<img src="images/resultados/test3/20211212_2020_ps_60_met_METODO1_mp_0.1_plot_fitness.png">
+
+
+### Graficas del Metodo 2
+Metodo 2: (padres emparejados acordes a su puntuacion)
+
+#### Tamaño de poblacion = 30 individuos
+<img src="images/resultados/test3/20211212_2020_ps_30_met_METODO2_mp_0.1_plot_fitness.png">
+
+#### Tamaño de poblacion = 60 individuos
+<img src="images/resultados/test3/20211212_2020_ps_60_met_METODO2_mp_0.1_plot_fitness.png">
+
+
+
+Podemos apreciar que los resultados convergen y los horarios generados son válidos ✅ 
+
 
 
 ## Ejemplos de horarios generados 
