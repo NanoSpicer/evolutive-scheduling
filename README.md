@@ -1,3 +1,7 @@
+<video>
+  <source src="https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4" type="video/mp4">
+</video>
+
 # Evolutive-scheduling
 
 Solving a scheduling problem using evolutive algorithms
