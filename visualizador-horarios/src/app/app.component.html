@@ -1,0 +1,118 @@
+<div class="flex flex-row justify-between items-center">
+  <img src="https://logo.uib.cat/digitalAssets/338/338690_logo-uib-horizontal300.png" height="75">
+  <h1> Visualizador de horarios </h1>
+</div>
+<div class="flex flex-row">
+  <ul>
+    <li>Metodo 1: Hace un <i>shuffle</i> de los padres</li>
+    <li>Metodo 2: Selecciona las mejores parejas de padres</li>
+
+  </ul>
+</div>
+<div class="flex flex-row justify-between" style="margin-top: 30px;">
+  <mat-form-field appearance="outline">
+    <mat-label>Seleccionar test</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let test of tests$ | async" (click)="onSelectTest(test)" [value]="test.nombre">
+        {{test.nombre}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <div class="flex flex-row gap-x-10" *ngIf="options$ | async as options">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Seleccionar metodo</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let meth of options.mutationMethods" (click)="selectedMetodo$.next(meth)" [value]="meth">
+          {{meth}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Seleccionar probabilidad de mutacion</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let prob of options.mutationProb" (click)="selectedProb$.next(prob)" [value]="prob">
+          {{prob}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Seleccionar tamaño poblacion</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let size of options.populationSizes" (click)="selectedSize$.next(size)" [value]="size">
+          {{size}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+</div>
+
+
+<div class="flex flex-row justify-between items-center" *ngIf="horario$ | async as horario">
+  <h4 *ngIf="selectedClaseConHorario$ | async as claseSeleccionada; else noClase">
+    Horario de la clase {{claseSeleccionada.clase.nombre}}
+  </h4>
+  <mat-form-field appearance="outline">
+    <mat-label>Seleccionar horario a visualizar</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let clase of horario.clasesConHorario" (click)="selectedClaseConHorario$.next(clase)" [value]="clase">
+        {{clase.clase.nombre}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<ng-container *ngIf="selectedClaseConHorario$ | async as claseConHorario">
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+
+    <ng-container matColumnDef="Hora">
+      <th mat-header-cell *matHeaderCellDef>Hora</th>
+      <td mat-cell *matCellDef="let el" [innerText]="el.hora"></td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="Lunes">
+      <th mat-header-cell *matHeaderCellDef>Lunes</th>
+      <td mat-cell *matCellDef="let el" [innerText]="el.lunes"></td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="Martes">
+      <th mat-header-cell *matHeaderCellDef>Martes</th>
+      <td mat-cell *matCellDef="let el" [innerText]="el.martes"></td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="Miercoles">
+      <th mat-header-cell *matHeaderCellDef>Miercoles</th>
+      <td mat-cell *matCellDef="let el" [innerText]="el.miercoles"></td>
+    </ng-container>
+
+    <ng-container matColumnDef="Jueves">
+      <th mat-header-cell *matHeaderCellDef>Jueves</th>
+      <td mat-cell *matCellDef="let el" [innerText]="el.jueves"></td>
+    </ng-container>
+
+    <ng-container matColumnDef="Viernes">
+      <th mat-header-cell *matHeaderCellDef>Viernes</th>
+      <td mat-cell *matCellDef="let el" [innerText]="el.viernes"></td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+  </table>
+</ng-container>
+
+
+
+
+
+
+<ng-template #noClase>
+  <h4> Selecciona un horario de un curso </h4>
+</ng-template>

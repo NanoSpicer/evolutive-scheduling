@@ -4,5 +4,9 @@ __pycache__/
 *$py.class
 *.pyc
 
+# JS
+node_modules/
+
 # Pycharm project
 .idea/
+outputs/
