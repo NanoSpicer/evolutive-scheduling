@@ -86,6 +86,15 @@ class Genotype:
         self.row_count = len(prof_list)
         self.col_count = 1 + DAYS_PER_WEEK * SLOTS_PER_DAY
         self.error = err.OurError()
+        self.horario_full = np.full(
+            (self.row_count, self.col_count),
+            NOT_AVAILABLE,
+            dtype=int
+        )
+        for (i, dia) in enumerate(horario):
+            for valor in dia:
+                self.horario_full[i, valor] = AVAILABLE
+
         self.data_set = np.full(
             (self.row_count, self.col_count),
             NOT_AVAILABLE,
@@ -109,7 +118,7 @@ class Genotype:
         last_col_index = self._professor_col_index()
         for (i, prof) in enumerate(self.prof_list):
             prof_row = self.data_set[i]
-            self._set_availability(prof_row, prof)
+            self._set_availability(prof_row, prof, self.horario_full)
             prof_row[last_col_index] = prof['idProfesor']
 
     def _find_row_index_for_professor_id(self, prof_id):
@@ -145,7 +154,7 @@ class Genotype:
             else:
                 self.error.set_error(
                     err.ERR_GENOTYPE_UNDER_SIZED,
-                    f"Not enough available slots for assignment({assignment['id']}"
+                    f"Not enough available slots for assignment({assignment['id']})"
                 )
                 self.error.print()
 
@@ -191,13 +200,14 @@ class Genotype:
         return (row[:-1] == AVAILABLE).sum()  # Avoid last column
 
     @staticmethod
-    def _set_availability(prof_row: list, profesor):
+    def _set_availability(prof_row: list, profesor, horario_full):
         weekday_index = MONDAY
         # availability_for_day: [[int],...]
         for availability_for_day in profesor['disponibilidad']:
             for available_hour in availability_for_day:
                 matrix_col_index = ((weekday_index * 24) + available_hour)
-                prof_row[matrix_col_index] = AVAILABLE
+                if horario_full[weekday_index, available_hour] == AVAILABLE:
+                    prof_row[matrix_col_index] = AVAILABLE
 
             weekday_index += 1
 
