@@ -65,11 +65,13 @@ def get_daily_bounds(dia):
     final_dia = inicio_dia + SLOTS_PER_DAY
     return inicio_dia, final_dia
 
+
+class NotFound(BaseException):
+    pass
+
 #
 # Class Genotype()
 #
-
-
 class Genotype:
     # La lista de todos los profesores con sus tareas asignadas
 
@@ -93,7 +95,6 @@ class Genotype:
         self._set_professors_availability()
         # Set initial assignments (populate)
         self._set_initial_assignments()
-        pass
 
     def _professor_col_index(self):
         # It's last column
@@ -105,13 +106,11 @@ class Genotype:
         return DAYS_PER_WEEK * SLOTS_PER_DAY
 
     def _set_professors_availability(self):
-        i = 0
         last_col_index = self._professor_col_index()
-        for prof in self.prof_list:
+        for (i, prof) in enumerate(self.prof_list):
             prof_row = self.data_set[i]
-            prof_row[last_col_index] = prof['idProfesor']
             self._set_availability(prof_row, prof)
-            i += 1
+            prof_row[last_col_index] = prof['idProfesor']
 
     def _find_row_index_for_professor_id(self, prof_id):
         index = 0
@@ -120,7 +119,8 @@ class Genotype:
             if row[prof_id_col_index] == prof_id:
                 return index
             index += 1
-        return -1
+        # Can't return -1 as that returns the last item in the list
+        raise NotFound()
 
     @staticmethod
     def _find_row_index_for_class_id(schedule, class_id):
@@ -130,7 +130,7 @@ class Genotype:
             if row[class_id_col_index] == class_id:
                 return index
             index += 1
-        return -1
+        raise NotFound()
 
     def _set_initial_assignments(self):
         for assignment in self.assign_list:
@@ -153,21 +153,25 @@ class Genotype:
         hours = assignation['horas']
         while hours > 0:
             random_col_index = random_slot_index()
-            if self._can_be_assigned(assignation, row_index, random_col_index):
+            if self._is_available(row_index, random_col_index):
                 self.data_set[row_index][random_col_index] = assignation['id']
                 hours -= 1
 
     def _can_be_assigned(self, assignation, row_index, col_index):
         return (
+            col_index != 168
+            and
             self._is_available(row_index, col_index)
             and
             not self._assignation_collides(assignation, col_index)
         )
 
     def _is_available(self, row_index, col_index):
-        return self.data_set[row_index][col_index] == AVAILABLE
+        return col_index != 168 and self.data_set[row_index][col_index] == AVAILABLE
 
     def _assignation_collides(self, assignation, col_index, skip_row_index=None):
+        if col_index == 168:
+            return True
         # no existe celda en columna cuya idClase sea igual al idClase de asignation
         for (row_index, row) in enumerate(self.data_set):
             if row_index == skip_row_index:
@@ -183,7 +187,8 @@ class Genotype:
 
     @staticmethod
     def _count_available_slots_for_row(row: np.ndarray) -> int:
-        return (row == AVAILABLE).sum()
+        # return (row == AVAILABLE).sum()
+        return (row[:-1] == AVAILABLE).sum()  # Avoid last column
 
     @staticmethod
     def _set_availability(prof_row: list, profesor):
@@ -344,6 +349,8 @@ class Genotype:
         ocurrencias = 0
         for (row_index, row) in enumerate(self.data_set):
             for (column_index, cell) in enumerate(row):
+                if column_index == 168:
+                    continue
                 assignation = self.assignations_by_id.get(cell)
                 if slot_value_is_assigned(cell) and self._assignation_collides(assignation, column_index, skip_row_index=row_index):
                     ocurrencias += 1
@@ -382,7 +389,7 @@ class Genotype:
         assignations_by_id = self.assignations_by_id
         for row in self.data_set:
             for (index_col, cell) in enumerate(row):
-                if not slot_value_is_assigned(cell):
+                if not slot_value_is_assigned(cell) or index_col == 168:
                     continue
 
                 assignacion = assignations_by_id[cell]
@@ -410,7 +417,6 @@ class Genotype:
         for [weight, rule] in self._get_rules_vector():
             new_score += weight * rule(schedule)
         self.score = new_score
-        pass
 
     def mutate(self, prob: float) -> bool:
         """
@@ -420,20 +426,29 @@ class Genotype:
         assert 0.0 <= prob <= 1.0, 'prob must be between 0 and 1'
         did_mutate = random.random() <= prob
 
-        if did_mutate:
-            col_index = random.randrange(0, self.col_count)
-            other_col_index = random.randrange(0, self.col_count)
-            tmp_first_col = self.data_set[:, col_index]
-            tmp_other_col = self.data_set[:, other_col_index]
-            self.data_set[:, col_index] = tmp_other_col
-            self.data_set[:, other_col_index] = tmp_first_col
+        def get_mutable_indexes(row: np.array):
+            return [x for x in row if slot_value_is_assigned(x)]
 
-        return did_mutate
+        if did_mutate:
+            for row in self.data_set:
+                mutable_indexes = get_mutable_indexes(row)
+                can_mutate = len(mutable_indexes) > 0
+                if not can_mutate:
+                    continue
+                col_index = random.choice(mutable_indexes)
+                col_other_index = random.choice(mutable_indexes)
+                tmp_first_col = row[col_index]
+                tmp_other_col = row[col_other_index]
+                row[col_other_index] = tmp_first_col
+                row[col_index] = tmp_other_col
+
+
 
 
 def random_slot_index():
     # gets a random slot index
-    return random.randrange(0, DAYS_PER_WEEK * SLOTS_PER_DAY)
+    # DAYS_PER_WEEK * SLOTS_PER_DAY  -> 168
+    return random.randrange(0, DAYS_PER_WEEK * SLOTS_PER_DAY)  # returns index between 0 and 167
 
 
 def slot_value_is_assigned(slot_value: int) -> bool:
